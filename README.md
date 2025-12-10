@@ -109,14 +109,15 @@ double lonDeg = lon.inDegrees();  // -74.006
 
 ```java
 import io.github.gcng54.flyeval.lib.units.Speed;
+import io.github.gcng54.flyeval.lib.units.Time;
 
 // Knots to meters per second
-Speed velocity = Speed.of(250, Speed.Unit.NAUTICAL_HR);
+Speed velocity = new Speed(250, Speed.Unit.NAUTICAL_HR);
 double velocityMps = velocity.inUnit(Speed.Unit.METER_HR) / 3600;
 
 // Derive speed from length and time
 Length distance = Length.of(100, Length.Unit.NAUTICAL);
-Time duration = Time.of(1, Time.Unit.HOUR);
+Time duration = new Time(1, Time.Unit.HOUR);
 Speed speed = distance.divide(duration);  // 100 knots
 ```
 
