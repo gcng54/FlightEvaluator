@@ -126,23 +126,23 @@ public interface IUnit<U extends IUnit<U>> {
         return getDimension().getBaseUnit();
     }
 
-    default EDimensions getDimension() {
+    default EDimension getDimension() {
         if (this instanceof Length.Unit)
-            return EDimensions.LENGTH;
+            return EDimension.LENGTH;
         if (this instanceof Angle.Unit)
-            return EDimensions.ANGLE;
+            return EDimension.ANGLE;
         if (this instanceof Time.Unit)
-            return EDimensions.TIME;
+            return EDimension.TIME;
         if (this instanceof Speed.Unit)
-            return EDimensions.SPEED;
+            return EDimension.SPEED;
         if (this instanceof Area.Unit)
-            return EDimensions.AREA;
+            return EDimension.AREA;
         if (this instanceof Volume.Unit)
-            return EDimensions.VOLUME;
+            return EDimension.VOLUME;
         if (this instanceof Pressure.Unit)
-            return EDimensions.PRESSURE;
+            return EDimension.PRESSURE;
         if (this instanceof Temperature.Unit)
-            return EDimensions.TEMPERATURE;
+            return EDimension.TEMPERATURE;
         throw new IllegalStateException("Unknown unit dimension for unit: " + this.toString());
     }
 

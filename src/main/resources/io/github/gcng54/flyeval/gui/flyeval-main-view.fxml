@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" 
+fx:controller="io.github.gcng54.flyeval.gui.FlyEvalController" spacing="8">
+<TabPane fx:id="tabPane" VBox.vgrow="ALWAYS">
+    <Tab text="Radar Conversions">
+        <fx:include source="radar-conversion-view.fxml"/>
+    </Tab>
+    <Tab text="Geo Conversions">
+        <fx:include source="geo-conversion-view.fxml"/>
+    </Tab>
+    <Tab text="Unit Conversions">
+        <fx:include source="unit-conversion-view.fxml"/>
+    </Tab>
+</TabPane>
+    <Button text="Close" onAction="#handleClose" maxWidth="120" alignment="CENTER" />
+</VBox>
