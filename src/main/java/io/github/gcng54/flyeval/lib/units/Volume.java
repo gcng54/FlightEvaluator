@@ -10,7 +10,7 @@ public class Volume extends AQuantity<Volume, Volume.Unit> {
      * {@link ELengths} unit.
      * The base unit is square meters (m²).
      */
-    enum Unit implements IUnit<Unit> {
+    public enum Unit implements IUnit<Unit> {
         CU_METER(Length.Unit.METER),
         CU_KILOMETER(Length.Unit.KILOMETER),
         CU_CENTIMETER(Length.Unit.CENTIMETER),

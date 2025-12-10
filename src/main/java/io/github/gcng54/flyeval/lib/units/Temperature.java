@@ -11,7 +11,7 @@ public class Temperature extends AQuantity<Temperature, Temperature.Unit> {
      * Note: Temperature conversions are affine, not linear, so they override the
      * default {@code toBase} and {@code fromBase} methods.
      */
-    enum Unit implements IUnit<Unit> {
+    public enum Unit implements IUnit<Unit> {
         KELVIN("K", 1.0),
         CELSIUS("°C", 1.0),
         FAHRENHEIT("°F", 1.0); // Factor is not used for conversion but required by interface

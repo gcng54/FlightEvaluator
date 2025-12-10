@@ -8,7 +8,7 @@ public class Angle extends AQuantity<Angle, Angle.Unit> {
     /**
      * Defines standard units of angle. The base unit is {@link #RADIAN}.
      */
-    enum Unit implements IUnit<Unit> {
+    public enum Unit implements IUnit<Unit> {
         RADIAN,        DEGREE,        DMS_DEGREE,        GRADIAN,        ARC_DEGREE,        ARC_MINUTE,        ARC_SECOND;
     
         @Override
@@ -129,6 +129,12 @@ public class Angle extends AQuantity<Angle, Angle.Unit> {
         return new Angle(val, unit).wrap(unit.toBase(-90.0), unit.toBase(90.0), Utils.EWrapMode.BOUNCE);
     }
 
+    public static Angle fromLatitudeRad(double radians) {
+        return new Angle(radians, Angle.Unit.RADIAN)
+                .wrap(Angle.Unit.DEGREE.toBase(-90.0), Angle.Unit.DEGREE.toBase(90.0),
+                        Utils.EWrapMode.BOUNCE);
+    }
+
     public static Angle fromLatitudeDeg(double degrees) {
         return new Angle(degrees, Angle.Unit.DEGREE)
                 .wrap(Angle.Unit.DEGREE.toBase(-90.0), Angle.Unit.DEGREE.toBase(90.0),
@@ -145,10 +151,15 @@ public class Angle extends AQuantity<Angle, Angle.Unit> {
                         Utils.EWrapMode.CYCLE);
     }
 
+    public static Angle fromLongitudeRad(double radians) {
+        return new Angle(radians, Angle.Unit.RADIAN).wrap(Angle.Unit.DEGREE.toBase(-180), Angle.Unit.DEGREE.toBase(180.0), Utils.EWrapMode.CYCLE);
+    }
+
     public static Angle fromElevation(double val, Angle.Unit unit) {
         return new Angle(val, unit).wrap(unit.toBase(-90.0), unit.toBase(90.0), Utils.EWrapMode.BOUNCE);
     }
 
+    
     public static Angle fromElevationDeg(double degrees) {
         return new Angle(degrees, Angle.Unit.DEGREE)
                 .wrap(Angle.Unit.DEGREE.toBase(-90.0), Angle.Unit.DEGREE.toBase(90.0),

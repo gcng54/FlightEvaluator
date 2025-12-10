@@ -8,7 +8,7 @@ public class Length extends AQuantity<Length, Length.Unit> {
     /**
      * Length units.
      */
-    enum Unit implements IUnit<Unit> {
+    public enum Unit implements IUnit<Unit> {
         METER, KILOMETER, CENTIMETER, FOOT, INCH, YARD, MILE, FLIGHTLEVEL, NAUTICAL, DATAMILE;
 
         @Override
@@ -184,12 +184,24 @@ public class Length extends AQuantity<Length, Length.Unit> {
         return new Length(fl_100ft, Length.Unit.FLIGHTLEVEL);
     }
 
-    public static Length fromDistance(double kilometer, Length.Unit unit) {
-        return new Length(kilometer, unit).wrapPositive();
+    public static Length fromDistance(double value, Length.Unit unit) {
+        return new Length(value, unit).wrapPositive();
     }
-    
+
+    public static Length fromRangeNM(double nautical) {
+        return new Length(nautical, Length.Unit.NAUTICAL).wrapPositive();
+    }
+
+    public static Length fromRangeKm(double kilometer) {
+        return new Length(kilometer, Length.Unit.KILOMETER).wrapPositive();
+    }
+
     public static Length fromDistanceKm(double kilometer) {
         return new Length(kilometer, Length.Unit.KILOMETER).wrapPositive();
+    }
+
+    public static Length fromDistanceMeter(double meter) {
+        return new Length(meter, Length.Unit.METER).wrapPositive();
     }
 
     public static Length fromAltitude(double meter, Length.Unit unit) {

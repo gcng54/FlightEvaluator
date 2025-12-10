@@ -2,7 +2,6 @@ package io.github.gcng54.flyeval.lib.units;
 
 import org.junit.jupiter.api.Test;
 
-
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Nested;

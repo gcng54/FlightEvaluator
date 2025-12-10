@@ -8,7 +8,7 @@ public class Pressure extends AQuantity<Pressure, Pressure.Unit> {
     /**
      * Defines standard units of pressure. The base unit is {@link #PASCAL}.
      */
-    enum Unit implements IUnit<Pressure.Unit> {
+    public enum Unit implements IUnit<Pressure.Unit> {
         PASCAL("Pa", 1.0),
         HECTOPASCAL("hPa", 100.0),
         KILOPASCAL("kPa", 1000.0),

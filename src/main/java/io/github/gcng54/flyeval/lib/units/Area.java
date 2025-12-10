@@ -10,7 +10,7 @@ public class Area extends AQuantity<Area, Area.Unit> {
      * {@link ELengths} unit.
      * The base unit is square meters (m²).
      */
-    enum Unit implements IUnit<Unit> {
+    public enum Unit implements IUnit<Unit> {
         SQ_METER(Length.Unit.METER),
         SQ_KILOMETER(Length.Unit.KILOMETER),
         SQ_CENTIMETER(Length.Unit.CENTIMETER),

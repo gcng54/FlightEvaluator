@@ -5,7 +5,7 @@ import java.util.Locale;
 /** Quantity representing elapsed time. */
 public class Time extends AQuantity<Time, Time.Unit> {
 
-enum Unit implements IUnit<Unit> {
+public enum Unit implements IUnit<Unit> {
         SECOND("s", 1.0),
         MINUTE("min", 60.0),
         HOUR("h", 3600.0),

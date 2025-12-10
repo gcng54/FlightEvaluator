@@ -10,7 +10,7 @@ public class Speed extends AQuantity<Speed, Speed.Unit> {
      * {@link ELengths} unit.
      * The base unit is square meters (m²).
      */
-    enum Unit implements IUnit<Unit> {
+    public enum Unit implements IUnit<Unit> {
         METER_HR(Length.Unit.METER),
         KILOMETER_HR(Length.Unit.KILOMETER),
         CENTIMETER_HR(Length.Unit.CENTIMETER),
