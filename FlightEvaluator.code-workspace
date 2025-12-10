@@ -1,0 +1,11 @@
+{
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+		"java.dependency.packagePresentation": "flat",
+		"java.project.explorer.showNonJavaResources": false
+	}
+}

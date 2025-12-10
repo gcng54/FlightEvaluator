@@ -1,11 +1,12 @@
-module io.github.gcng54.flightevaluator {
+module io.github.gcng54.flyeval {
     requires javafx.controls;
     requires javafx.fxml;
 
     requires org.controlsfx.controls;
     requires com.dlsc.formsfx;
     requires net.synedra.validatorfx;
+    requires org.jetbrains.annotations;
 
-    opens io.github.gcng54.flightevaluator to javafx.fxml;
-    exports io.github.gcng54.flightevaluator;
+    exports io.github.gcng54.flyeval.gui;
+    opens io.github.gcng54.flyeval.gui to javafx.fxml;
 }

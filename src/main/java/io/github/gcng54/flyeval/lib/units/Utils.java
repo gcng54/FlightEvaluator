@@ -1,16 +1,18 @@
-package io.github.gcng54.flyeval.lib.utils;
+package io.github.gcng54.flyeval.lib.units;
 
-public class UnitUtils {
+import java.util.Locale;
+
+
+public final class Utils {
+
     public static final double EPSILON = 1E-12;
 
     /**
      * Private constructor to prevent instantiation of this utility class.
      */
-    public FlightUtils() {
+    public Utils() {
         throw new UnsupportedOperationException("No instances allowed!");
     }
-
-
 
     /**
      * Converts a string to sentence case (first letter capitalized, rest
