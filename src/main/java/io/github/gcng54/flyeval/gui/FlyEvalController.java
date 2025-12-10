@@ -1,14 +1,22 @@
 package io.github.gcng54.flyeval.gui;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
 
 public class FlyEvalController {
-    @FXML
-    private Label welcomeText;
+
 
     @FXML
-    protected void onHelloButtonClick() {
-        welcomeText.setText("Welcome to JavaFX Application!");
+    private void handleClose(javafx.event.ActionEvent event) {
+        javafx.scene.Node source = (javafx.scene.Node) event.getSource();
+        javafx.stage.Window window = source.getScene().getWindow();
+        window.hide();
     }
+
+    @FXML
+    public void initialize() {
+        // The tabs are already loaded by the radeval_mainform-view.fxml via <fx:include>.
+        // Manually loading them here again was causing the application to fail during startup.
+        // This method can be left empty.
+    }
+
 }

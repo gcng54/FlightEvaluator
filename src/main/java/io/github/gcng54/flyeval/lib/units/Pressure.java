@@ -47,7 +47,11 @@ public class Pressure extends AQuantity<Pressure, Pressure.Unit> {
 
         @Override
         public String toString() {
-            return IUnit.toSentenceCase(this.name()) + "s";
+            return switch (this) {
+                case PSI -> "PSI";
+
+                default -> IUnit.toSentenceCase(this.name()) + "s";
+            };
         }
 
     }
@@ -60,6 +64,10 @@ public class Pressure extends AQuantity<Pressure, Pressure.Unit> {
     /** @return value expressed in millibars. */
     public double inMillibar() {
         return this.inUnit(Pressure.Unit.MILLIBAR);
+    }
+
+    public static Pressure fromPressure(double val, Pressure.Unit unit) {
+        return new Pressure(val, unit).wrapPositive();
     }
 
     public static Pressure fromAirPressure(double val, Pressure.Unit unit) {

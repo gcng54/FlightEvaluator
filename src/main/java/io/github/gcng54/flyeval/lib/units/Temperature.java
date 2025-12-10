@@ -47,7 +47,7 @@ public class Temperature extends AQuantity<Temperature, Temperature.Unit> {
 
         @Override
         public String toString() {
-            return IUnit.toSentenceCase(this.name()) + "s";
+            return IUnit.toSentenceCase(this.name());
         }
 
         /**

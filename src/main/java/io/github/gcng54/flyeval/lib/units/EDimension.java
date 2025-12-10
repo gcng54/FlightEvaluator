@@ -24,7 +24,7 @@ import java.util.Locale;
  * but the input must still match one of the declared enum constant names.
  * </p>
  */
-enum EDimensions {
+public enum EDimension {
     LENGTH("Length", Length.Unit.METER),
         ANGLE("Angle", Angle.Unit.RADIAN),
         TIME("Time", Time.Unit.SECOND),
@@ -37,7 +37,7 @@ enum EDimensions {
     private final String name;
     private final IUnit<?> baseUnit;
 
-    EDimensions(String name, IUnit<?> baseUnit) {
+    EDimension(String name, IUnit<?> baseUnit) {
         this.name = name;
         this.baseUnit = baseUnit;
     }
@@ -51,7 +51,7 @@ enum EDimensions {
         return name;
     }
 
-    public static EDimensions fromName(String name_) {
-        return EDimensions.valueOf(name_.toUpperCase(Locale.ENGLISH));
+    public static EDimension fromName(String name_) {
+        return EDimension.valueOf(name_.toUpperCase(Locale.ENGLISH));
     }
 }

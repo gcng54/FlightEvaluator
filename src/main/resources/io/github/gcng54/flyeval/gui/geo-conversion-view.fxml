@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<GridPane hgap="10" vgap="8" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="io.github.gcng54.flyeval.gui.GeoConversionController">
+    <padding>
+        <Insets top="10" right="10" bottom="10" left="10" />
+    </padding>
+
+    <columnConstraints>
+        <ColumnConstraints prefWidth="180" />
+        <ColumnConstraints prefWidth="160" />
+        <ColumnConstraints prefWidth="170" />
+    </columnConstraints>
+
+    <rowConstraints>
+        <RowConstraints prefHeight="28" /> <!-- 0 mode label -->
+        <RowConstraints prefHeight="28" /> <!-- 1 ref header -->
+        <RowConstraints prefHeight="28" /> <!-- 2 ref lon -->
+        <RowConstraints prefHeight="28" /> <!-- 3 ref lat -->
+        <RowConstraints prefHeight="28" /> <!-- 4 ref alt -->
+        <RowConstraints prefHeight="10" /> <!-- 5 sep -->
+        <RowConstraints prefHeight="28" /> <!-- 6 tgt header -->
+        <RowConstraints prefHeight="28" /> <!-- 7 tgt lon -->
+        <RowConstraints prefHeight="28" /> <!-- 8 tgt lat -->
+        <RowConstraints prefHeight="28" /> <!-- 9 tgt alt -->
+        <RowConstraints prefHeight="10" /> <!-- 10 sep -->
+        <RowConstraints prefHeight="28" /> <!-- 11 cart header -->
+        <RowConstraints prefHeight="28" /> <!-- 12 dx -->
+        <RowConstraints prefHeight="28" /> <!-- 13 dy -->
+        <RowConstraints prefHeight="28" /> <!-- 14 dz -->
+        <RowConstraints prefHeight="10" /> <!-- 15 sep -->
+        <RowConstraints prefHeight="28" /> <!-- 16 sph header -->
+        <RowConstraints prefHeight="28" /> <!-- 17 az -->
+        <RowConstraints prefHeight="28" /> <!-- 18 el -->
+        <RowConstraints prefHeight="28" /> <!-- 19 range -->
+        <RowConstraints prefHeight="32" /> <!-- 20 error -->
+    </rowConstraints>
+
+    <Label text="Input Mode" GridPane.rowIndex="0" />
+    <ComboBox fx:id="modeComboBox" GridPane.columnIndex="1" GridPane.rowIndex="0" prefWidth="200" />
+    <Button text="Convert" onAction="#handleCompute" GridPane.columnIndex="2" GridPane.rowIndex="0" prefWidth="150"/>
+
+    <Label text="Reference Geodetic" style="-fx-font-weight: bold;" GridPane.rowIndex="1" />
+    <Label text="Longitude" GridPane.rowIndex="2" />
+    <TextField fx:id="refLonField" promptText="Longitude" text="035 00 00 E" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+    <ComboBox fx:id="refLonUnitCombo" prefWidth="150" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+    <Label text="Latitude" GridPane.rowIndex="3" />
+    <TextField fx:id="refLatField" promptText="Latitude" text="39 00 00 N" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+    <ComboBox fx:id="refLatUnitCombo" prefWidth="150" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+    <Label text="Altitude" GridPane.rowIndex="4" GridPane.columnIndex="0" />
+    <TextField fx:id="refAltField" promptText="Altitude" text="1000" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+    <ComboBox fx:id="refAltUnitCombo" prefWidth="150" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+
+    <Separator GridPane.columnSpan="3" GridPane.rowIndex="5" />
+
+    <Label text="Target Geodetic" style="-fx-font-weight: bold;" GridPane.rowIndex="6" />
+    <Label text="Longitude" GridPane.rowIndex="7" />
+    <TextField fx:id="tgtLonField" promptText="Longitude" text="036 00 00 E" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+    <ComboBox fx:id="tgtLonUnitCombo" prefWidth="150" GridPane.columnIndex="2" GridPane.rowIndex="7" />
+    <Label text="Latitude" GridPane.rowIndex="8" />
+    <TextField fx:id="tgtLatField" promptText="Latitude" text="40 00 00 N" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+    <ComboBox fx:id="tgtLatUnitCombo" prefWidth="150" GridPane.columnIndex="2" GridPane.rowIndex="8" />
+    <Label text="Altitude" GridPane.rowIndex="9" GridPane.columnIndex="0" />
+    <TextField fx:id="tgtAltField" promptText="Altitude" text="1000" GridPane.columnIndex="1" GridPane.rowIndex="9" />
+    <ComboBox fx:id="tgtAltUnitCombo" prefWidth="150" GridPane.columnIndex="2" GridPane.rowIndex="9" />
+
+    <Separator GridPane.columnSpan="3" GridPane.rowIndex="10" />
+
+    <Label text="Cartesian Offset (ENU)" style="-fx-font-weight: bold;" GridPane.rowIndex="11" />
+    <Label text="dX" GridPane.rowIndex="12" />
+    <TextField fx:id="dxField" promptText="dX" GridPane.columnIndex="1" GridPane.rowIndex="12" />
+    <ComboBox fx:id="dxUnitCombo" prefWidth="150" GridPane.columnIndex="2" GridPane.rowIndex="12" />
+    <Label text="dY" GridPane.columnIndex="0" GridPane.rowIndex="13" />
+    <TextField fx:id="dyField" promptText="dY" GridPane.columnIndex="1" GridPane.rowIndex="13" />
+    <ComboBox fx:id="dyUnitCombo" prefWidth="150" GridPane.columnIndex="2" GridPane.rowIndex="13" />
+    <Label text="dZ" GridPane.columnIndex="0" GridPane.rowIndex="14" />
+    <TextField fx:id="dzField" promptText="dZ" GridPane.columnIndex="1" GridPane.rowIndex="14" />
+    <ComboBox fx:id="dzUnitCombo" prefWidth="150" GridPane.columnIndex="2" GridPane.rowIndex="14" />
+
+    <Separator GridPane.columnSpan="3" GridPane.rowIndex="15" />
+
+    <Label text="Spherical Offset (ENU)" style="-fx-font-weight: bold;" GridPane.rowIndex="16" />
+    <Label text="Azimuth" GridPane.rowIndex="17" />
+    <TextField fx:id="azField" promptText="Azimuth" GridPane.columnIndex="1" GridPane.rowIndex="17" />
+    <ComboBox fx:id="azUnitCombo" prefWidth="150" GridPane.columnIndex="2" GridPane.rowIndex="17" />
+    <Label text="Elevation" GridPane.rowIndex="18" />
+    <TextField fx:id="elField" promptText="Elevation" GridPane.columnIndex="1" GridPane.rowIndex="18" />
+    <ComboBox fx:id="elUnitCombo" prefWidth="150" GridPane.columnIndex="2" GridPane.rowIndex="18" />
+    <Label text="Range" GridPane.rowIndex="19" />
+    <TextField fx:id="rangeField" promptText="Range" GridPane.columnIndex="1" GridPane.rowIndex="19" />
+    <ComboBox fx:id="rangeUnitCombo" prefWidth="150" GridPane.columnIndex="2" GridPane.rowIndex="19" />
+
+    <Label fx:id="errorLabel" style="-fx-text-fill: red;" GridPane.columnSpan="3" GridPane.rowIndex="20" />
+</GridPane>

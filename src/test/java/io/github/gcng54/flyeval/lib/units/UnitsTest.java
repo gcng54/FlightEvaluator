@@ -13,33 +13,33 @@ public class UnitsTest {
 
         @Test
         public void testPhysicalDimensionFromNameCaseInsensitive() {
-            assertEquals(EDimensions.LENGTH, EDimensions.fromName("length"));
-            assertEquals(EDimensions.ANGLE, EDimensions.fromName("AnGlE"));
-            assertEquals(EDimensions.TIME, EDimensions.fromName("TIME"));
+            assertEquals(EDimension.LENGTH, EDimension.fromName("length"));
+            assertEquals(EDimension.ANGLE, EDimension.fromName("AnGlE"));
+            assertEquals(EDimension.TIME, EDimension.fromName("TIME"));
         }
 
         @Test
         public void testPhysicalDimensionFromNameInvalid() {
-            assertThrows(IllegalArgumentException.class, () -> EDimensions.fromName("not_a_dimension"));
+            assertThrows(IllegalArgumentException.class, () -> EDimension.fromName("not_a_dimension"));
         }
 
         @Test
         public void testPhysicalDimensionBaseUnits() {
-            assertEquals(Length.Unit.METER, EDimensions.LENGTH.getBaseUnit());
-            assertEquals(Angle.Unit.RADIAN, EDimensions.ANGLE.getBaseUnit());
-            assertEquals(Time.Unit.SECOND, EDimensions.TIME.getBaseUnit());
-            assertEquals(Speed.Unit.METER_HR, EDimensions.SPEED.getBaseUnit());
-            assertEquals(Area.Unit.SQ_METER, EDimensions.AREA.getBaseUnit());
-            assertEquals(Volume.Unit.CU_METER, EDimensions.VOLUME.getBaseUnit());
-            assertEquals(Pressure.Unit.PASCAL, EDimensions.PRESSURE.getBaseUnit());
-            assertEquals(Temperature.Unit.KELVIN, EDimensions.TEMPERATURE.getBaseUnit());
+            assertEquals(Length.Unit.METER, EDimension.LENGTH.getBaseUnit());
+            assertEquals(Angle.Unit.RADIAN, EDimension.ANGLE.getBaseUnit());
+            assertEquals(Time.Unit.SECOND, EDimension.TIME.getBaseUnit());
+            assertEquals(Speed.Unit.METER_HR, EDimension.SPEED.getBaseUnit());
+            assertEquals(Area.Unit.SQ_METER, EDimension.AREA.getBaseUnit());
+            assertEquals(Volume.Unit.CU_METER, EDimension.VOLUME.getBaseUnit());
+            assertEquals(Pressure.Unit.PASCAL, EDimension.PRESSURE.getBaseUnit());
+            assertEquals(Temperature.Unit.KELVIN, EDimension.TEMPERATURE.getBaseUnit());
         }
 
         @Test
         public void testPhysicalDimensionToStringIsNiceName() {
-            assertEquals("Length", EDimensions.LENGTH.toString());
-            assertEquals("Angle", EDimensions.ANGLE.toString());
-            assertEquals("Time", EDimensions.TIME.toString());
+            assertEquals("Length", EDimension.LENGTH.toString());
+            assertEquals("Angle", EDimension.ANGLE.toString());
+            assertEquals("Time", EDimension.TIME.toString());
         }
 
         @Test
@@ -177,14 +177,14 @@ public class UnitsTest {
 
         @Test
         public void testGetDimensionForEachUnitEnum() {
-            assertEquals(EDimensions.LENGTH, Length.Unit.METER.getDimension());
-            assertEquals(EDimensions.ANGLE, Angle.Unit.RADIAN.getDimension());
-            assertEquals(EDimensions.TIME, Time.Unit.SECOND.getDimension());
-            assertEquals(EDimensions.SPEED, Speed.Unit.METER_HR.getDimension());
-            assertEquals(EDimensions.AREA, Area.Unit.SQ_METER.getDimension());
-            assertEquals(EDimensions.VOLUME, Volume.Unit.CU_METER.getDimension());
-            assertEquals(EDimensions.PRESSURE, Pressure.Unit.PASCAL.getDimension());
-            assertEquals(EDimensions.TEMPERATURE, Temperature.Unit.KELVIN.getDimension());
+            assertEquals(EDimension.LENGTH, Length.Unit.METER.getDimension());
+            assertEquals(EDimension.ANGLE, Angle.Unit.RADIAN.getDimension());
+            assertEquals(EDimension.TIME, Time.Unit.SECOND.getDimension());
+            assertEquals(EDimension.SPEED, Speed.Unit.METER_HR.getDimension());
+            assertEquals(EDimension.AREA, Area.Unit.SQ_METER.getDimension());
+            assertEquals(EDimension.VOLUME, Volume.Unit.CU_METER.getDimension());
+            assertEquals(EDimension.PRESSURE, Pressure.Unit.PASCAL.getDimension());
+            assertEquals(EDimension.TEMPERATURE, Temperature.Unit.KELVIN.getDimension());
         }
 
         @Test
