@@ -91,6 +91,7 @@ double distanceInKm = distance.inKilometer();  // 185.2
 
 ```java
 import io.github.gcng54.flyeval.lib.units.Angle;
+import io.github.gcng54.flyeval.lib.units.DegMinSec;
 
 // Degrees to radians
 Angle heading = Angle.fromAzimuthDeg(45.0);
@@ -98,11 +99,11 @@ double headingRad = heading.inRadians();  // 0.7854
 
 // DMS (Degrees-Minutes-Seconds) format
 Angle latitude = Angle.fromLatitudeDeg(40.7128);
-String dmsString = latitude.toDMSString();  // "40°42'46.08"N"
+String dmsString = latitude.toDMSString();  // "40°42'46.08""
 
-// Create from DMS
-Angle lon = Angle.fromDMS(74, 0, 21.6, Angle.Unit.DEGREE);
-double lonDeg = lon.inDegrees();  // -74.006
+// Create from DMS string
+double lonDeg = DegMinSec.parseDMS("74°00'21.6\"W");  // -74.006
+Angle lon = Angle.fromLongitudeDeg(lonDeg);
 ```
 
 #### Speed Conversions
@@ -363,7 +364,7 @@ System.out.printf("Aircraft at:%n");
 System.out.printf("  Azimuth: %.1f°%n", radarView.azimuth().inDegrees());
 System.out.printf("  Elevation: %.2f°%n", radarView.elevation().inDegrees());
 System.out.printf("  Range: %.1f NM%n", radarView.range().inNautical());
-System.out.printf("  Altitude: %s%n", aircraft.alt().create(Length.Unit.FOOT));
+System.out.printf("  Altitude: %.0f ft%n", aircraft.alt().inFoot());
 ```
 
 #### Multiple Earth Models
