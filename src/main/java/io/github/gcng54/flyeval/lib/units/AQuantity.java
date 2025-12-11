@@ -115,7 +115,7 @@ public abstract class AQuantity<Q extends AQuantity<Q, U>, U extends IUnit<U>> {
      *
      * @return quantity whose base value is clamped to zero or greater
      */
-    public Q wrapedPositive() {
+    public Q wrapPositive() {
         return createBase(Utils.wrapBound(getBase(), 0.0, Double.POSITIVE_INFINITY));
     }
 

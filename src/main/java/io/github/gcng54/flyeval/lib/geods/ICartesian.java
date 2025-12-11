@@ -59,11 +59,11 @@ public interface ICartesian<T extends ICartesian<T>> {
         return new double[] { getBaseX(), getBaseY(), getBaseZ() };
     }
 
-    default T clamp(@NotNull ICartesian<?> min, @NotNull ICartesian<?> max, Utils.EWrapMode wrapMode) {
+    default T wrapBound(@NotNull ICartesian<?> min, @NotNull ICartesian<?> max) {
         return create(
-                this.getX().wrap(min.getBaseX(), max.getBaseX(), wrapMode),
-                this.getY().wrap(min.getBaseY(), max.getBaseY(), wrapMode),
-                this.getZ().wrap(min.getBaseZ(), max.getBaseZ(), wrapMode));
+                this.getX().wrapBound(min.getBaseX(), max.getBaseX()),
+                this.getY().wrapBound(min.getBaseY(), max.getBaseY()),
+                this.getZ().wrapBound(min.getBaseZ(), max.getBaseZ()));
     }
 
     default String toStringXYZ() {
