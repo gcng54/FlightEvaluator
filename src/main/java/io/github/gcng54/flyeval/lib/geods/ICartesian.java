@@ -43,12 +43,12 @@ public interface ICartesian<T extends ICartesian<T>> {
         double x = getBaseX();
         double y = getBaseY();
         double z = getBaseZ();
-        double az = Math.atan2(y, x);
+        Angle az = Angle.calcAzimuth(x, y);
         double el = Math.asin(z / rangeVal);
 
-        return new Spherical(Angle.fromAngle(az, Angle.Unit.RADIAN),
-                Angle.fromAngle(el, Angle.Unit.RADIAN),
-                Length.of(rangeVal, Length.Unit.METER));
+        return new Spherical(az,
+                Angle.fromElevation(el, Angle.Unit.RADIAN),
+                Length.fromMeter(rangeVal));
     }
 
     default T copy() {

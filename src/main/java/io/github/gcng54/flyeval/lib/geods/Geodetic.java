@@ -34,7 +34,7 @@ public record Geodetic(Angle lon, Angle lat, Length alt) implements ISpherical<G
     public Geodetic(double lon_deg, double lat_deg, double alt_m) {
         this(Angle.fromLongitudeDeg(lon_deg),
                 Angle.fromLatitudeDeg(lat_deg),
-                Length.fromAltitudeMeter(alt_m));
+                Length.fromAltitudeMt(alt_m));
     }
 
     @Override

@@ -23,7 +23,7 @@ public class RadarsTest {
     private Geodetic createGeodetic(double lonDeg, double latDeg, double altM) {
         Angle lon = Angle.fromLongitudeDeg(lonDeg);
         Angle lat = Angle.fromLatitudeDeg(latDeg);
-        Length alt = Length.fromAltitudeMeter(altM);
+        Length alt = Length.fromAltitudeMt(altM);
         return new Geodetic(lon, lat, alt);
     }
 
@@ -81,7 +81,7 @@ public class RadarsTest {
 
         Angle az = Angle.fromAzimuthDeg(45.0);
         Angle el = Angle.fromElevationDeg(5.0);
-        Length range = Length.fromDistanceMeter(100_000.0);
+        Length range = Length.fromDistanceMt(100_000.0);
         Spherical sph = new Spherical(az, el, range);
 
         Geodetic gDefault = Radiations.toGeodetic(radar, sph);
@@ -94,7 +94,7 @@ public class RadarsTest {
 
     @Test
     public void testHorizonDistanceZeroAltitudeIsZero() {
-        Length alt0 = Length.fromAltitudeMeter(0.0);
+        Length alt0 = Length.fromAltitudeMt(0.0);
         Angle lat = Angle.fromLatitudeDeg(0.0);
 
         Length horizon = Radiations.getHorizonDistance(alt0, lat);
@@ -104,8 +104,8 @@ public class RadarsTest {
     @Test
     public void testHorizonDistanceIncreasesWithAltitude() {
         Angle lat = Angle.fromLatitudeDeg(52.0);
-        Length altLow = Length.fromAltitudeMeter(100.0);
-        Length altHigh = Length.fromAltitudeMeter(1000.0);
+        Length altLow = Length.fromAltitudeMt(100.0);
+        Length altHigh = Length.fromAltitudeMt(1000.0);
 
         Length dLow = Radiations.getHorizonDistance(altLow, lat);
         Length dHigh = Radiations.getHorizonDistance(altHigh, lat);
@@ -116,7 +116,7 @@ public class RadarsTest {
     @Test
     public void testHorizonDistanceDefaultMatchesExplicitK() {
         Angle lat = Angle.fromLatitudeDeg(40.0);
-        Length alt = Length.fromAltitudeMeter(500.0);
+        Length alt = Length.fromAltitudeMt(500.0);
 
         Length dDefault = Radiations.getHorizonDistance(alt, lat);
         Length dExplicit = Radiations.getHorizonDistance(alt, lat, Radiations.STANDARD_REFRACTION_K);

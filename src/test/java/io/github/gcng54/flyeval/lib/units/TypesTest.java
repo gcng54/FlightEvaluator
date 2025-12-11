@@ -50,14 +50,14 @@ public class TypesTest {
 
         @Test
         void testAltitudeWithinBounds() {
-            Length l = Length.fromAltitudeMeter(500.0);
+            Length l = Length.fromAltitudeMt(500.0);
             assertEquals(500.0, l.getValue());
             assertEquals(Length.Unit.METER, l.getUnit());
         }
 
         @Test
         void testAltitudeBelowLowerBound() {
-            Length l = Length.fromAltitudeMeter(-500.0);
+            Length l = Length.fromAltitudeMt(-500.0);
             assertEquals(0.0, l.getValue());
         }
 

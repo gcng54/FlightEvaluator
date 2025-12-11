@@ -45,6 +45,10 @@ public abstract class AQuantity<Q extends AQuantity<Q, U>, U extends IUnit<U>> {
      */
     public abstract Q create(double val, U unit);
 
+    public Q of(double val, U unit){
+        return create(val, unit);
+    }
+
     /**
      * Creates a new instance of {@code Q} with the specified value and the default
      * unit.

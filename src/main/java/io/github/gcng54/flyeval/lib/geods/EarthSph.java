@@ -11,7 +11,7 @@ public final class EarthSph implements IEarthModel {
     private final Length radius;
 
     public EarthSph(double meanRadiusMeters) {
-        this.radius = Length.fromAltitudeMeter(meanRadiusMeters);
+        this.radius = Length.fromAltitudeMt(meanRadiusMeters);
     }
 
     @Override
@@ -29,7 +29,7 @@ public final class EarthSph implements IEarthModel {
         Angle lon = Angle.fromLongitude(
                 Math.atan2(ecef.getY().getBase(), ecef.getX().getBase()), Angle.Unit.RADIAN);
         Angle lat = Angle.fromLatitude(Math.asin(ecef.getZ().getBase() / rangeVal), Angle.Unit.RADIAN);
-        Length alt = Length.fromAltitudeMeter(rangeVal - radius.getBase());
+        Length alt = Length.fromAltitudeMt(rangeVal - radius.getBase());
         return new Geodetic(lon, lat, alt);
     }
 

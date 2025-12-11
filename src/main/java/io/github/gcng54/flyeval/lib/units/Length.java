@@ -99,13 +99,6 @@ public class Length extends AQuantity<Length, Length.Unit> {
     }
 
     /**
-     * Public static factory for Length.
-     */
-    public static Length of(double value, Length.Unit unit) {
-        return new Length(value, unit);
-    }
-
-    /**
      * Creates a length value with the provided unit.
      *
      * @param value numeric value
@@ -200,7 +193,7 @@ public class Length extends AQuantity<Length, Length.Unit> {
         return new Length(kilometer, Length.Unit.KILOMETER).wrapPositive();
     }
 
-    public static Length fromDistanceMeter(double meter) {
+    public static Length fromDistanceMt(double meter) {
         return new Length(meter, Length.Unit.METER).wrapPositive();
     }
 
@@ -208,7 +201,7 @@ public class Length extends AQuantity<Length, Length.Unit> {
         return new Length(meter, unit).wrapPositive();
     }
     
-    public static Length fromAltitudeMeter(double meter) {
+    public static Length fromAltitudeMt(double meter) {
         return new Length(meter, Length.Unit.METER).wrapPositive();
     }
 

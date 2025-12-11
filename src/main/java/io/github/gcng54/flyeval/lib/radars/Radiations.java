@@ -348,7 +348,7 @@ public final class Radiations {
             // Law of cosines to find side_C_T^2
             double side_C_T_sq = side_C_R * side_C_R + R_s * R_s + 2 * side_C_R * R_s * Math.sin(elRad);
             double side_C_T = Math.sqrt(side_C_T_sq);
-            finalTargetAlt = Length.fromAltitudeMeter(side_C_T - Re);
+            finalTargetAlt = Length.fromAltitudeMt(side_C_T - Re);
 
             // Law of cosines to find central angle (gamma)
             double cosGamma = (side_C_R * side_C_R + side_C_T_sq - R_s * R_s) / (2 * side_C_R * side_C_T);
@@ -512,6 +512,6 @@ public final class Radiations {
         double horizonDistSq = (2 * Re * h) + (h * h);
         double horizonDist = Math.sqrt(horizonDistSq);
 
-        return Length.fromDistanceMeter(horizonDist);
+        return Length.fromDistanceMt(horizonDist);
     }
 }

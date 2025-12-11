@@ -65,7 +65,7 @@ public interface IUnit<U extends IUnit<U>> {
         }
     }
 
-        /**
+    /**
      * Converts a string to sentence case (first letter capitalized, rest
      * lowercase).
      *
