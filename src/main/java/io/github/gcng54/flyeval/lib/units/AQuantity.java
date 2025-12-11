@@ -90,37 +90,24 @@ public abstract class AQuantity<Q extends AQuantity<Q, U>, U extends IUnit<U>> {
 
     /**
      * Returns a new quantity with its base value wrapped within the provided bounds
-     * using the selected wrap mode.
      *
      * @param minBase  lower bound in base units
      * @param maxBase  upper bound in base units
-     * @param wrapMode wrapping strategy
      * @return wrapped quantity
      */
-    public Q wrap(double minBase, double maxBase, Utils.EWrapMode wrapMode) {
-        double val = getBase();
-        if (wrapMode != Utils.EWrapMode.NONE) {
-            val = Utils.wrapWithMode(getBase(), minBase, maxBase, wrapMode);
-        }
+    public Q wrapBound(double minBase, double maxBase) {
+        double val = Utils.wrapBound(getBase(), minBase, maxBase);
         return create(fromBase(val), unit);
     }
 
-    public Q wrap(double minBase, double maxBase, Wrapper.EWrapMode wrapMode) {
-        var wrapped = getWrapper(minBase, maxBase, wrapMode).wrap(getBase(), unit);
-        return create(wrapped);
+    public Q wrapBounce(double minBase, double maxBase) {
+        double val = Utils.wrapBounce(getBase(), minBase, maxBase);
+        return create(fromBase(val), unit);
     }
 
-    public static Wrapper getWrapper(double minBase, double maxBase, Wrapper.EWrapMode wrapMode) {
-        return new Wrapper(minBase, maxBase, wrapMode);
-    }
-
-    /**
-     * Returns this quantity without applying any wrapping.
-     *
-     * @return unmodified quantity
-     */
-    public Q wrap() {
-        return wrap(-Double.MAX_VALUE, Double.MAX_VALUE, Utils.EWrapMode.NONE);
+    public Q wrapCycle(double minBase, double maxBase) {
+        double val = Utils.wrapCycle(getBase(), minBase, maxBase);
+        return create(fromBase(val), unit);
     }
 
     /**
@@ -128,12 +115,8 @@ public abstract class AQuantity<Q extends AQuantity<Q, U>, U extends IUnit<U>> {
      *
      * @return quantity whose base value is clamped to zero or greater
      */
-    public Q wrapPositive() {
-        return wrap(0.0, Double.POSITIVE_INFINITY, Utils.EWrapMode.BOUND);
-    }
-
-    public Q wrapDegrees(double mindeg, double maxdeg, Utils.EWrapMode mode) {
-       return wrap(Angle.Unit.DEGREE.toBase(mindeg), Angle.Unit.DEGREE.toBase(maxdeg), mode);
+    public Q wrapedPositive() {
+        return createBase(Utils.wrapBound(getBase(), 0.0, Double.POSITIVE_INFINITY));
     }
 
     /**
