@@ -13,15 +13,14 @@ public class Angle extends AQuantity<Angle, Angle.Unit> {
     
         @Override
         public String getSymbol() {
-            String symbol = "A";
-            switch (this) {
-                case RADIAN: symbol = "rad"; break;
-                case DEGREE : symbol =  "°"; break;
-                case DMS_DEGREE : symbol =  "dms"; break;
-                case GRADIAN : symbol =  "gon"; break;
-                case ARC_DEGREE : symbol =  "arc°"; break;
-                case ARC_MINUTE : symbol =  "arc'"; break;
-                case ARC_SECOND : symbol =  "arc\""; break;
+            String symbol = switch (this) {
+                case RADIAN -> "rad";
+                case DEGREE -> "°";
+                case DMS_DEGREE -> "dms";
+                case GRADIAN -> "gon";
+                case ARC_DEGREE -> "arc°";
+                case ARC_MINUTE -> "arc'";
+                case ARC_SECOND -> "arc\"";
             };
             validateSymbol(symbol);
             return symbol;
@@ -29,15 +28,14 @@ public class Angle extends AQuantity<Angle, Angle.Unit> {
 
         @Override
         public double getFactor() {
-            double factor = 1.0;
-            switch (this) {
-                case RADIAN: factor = 1.0; break;
-                case DEGREE : factor = Math.PI / 180.0; break;
-                case DMS_DEGREE : factor = Math.PI / 180.0; break;
-                case GRADIAN : factor = Math.PI / 200.0; break;
-                case ARC_DEGREE : factor = Math.PI / 180.0; break;
-                case ARC_MINUTE : factor = Math.PI / 10800.0; break;
-                case ARC_SECOND : factor = Math.PI / 648000.0; break;
+            double factor = switch (this) {
+                case RADIAN -> 1.0;
+                case DEGREE -> Math.PI / 180.0;
+                case DMS_DEGREE -> Math.PI / 180.0;
+                case GRADIAN -> Math.PI / 200.0;
+                case ARC_DEGREE -> Math.PI / 180.0;
+                case ARC_MINUTE -> Math.PI / 10800.0;
+                case ARC_SECOND -> Math.PI / 648000.0;
             };
             validateFactor(factor);
             return factor;
@@ -99,71 +97,65 @@ public class Angle extends AQuantity<Angle, Angle.Unit> {
         return this.inUnit(Angle.Unit.ARC_SECOND);
     }
 
-    public static Angle fromAngle(double val, Angle.Unit unit) {
+    public static Angle ofAngle(double val, Angle.Unit unit) {
         return new Angle(val, unit);
     }
 
-    public static Angle fromDegree(double degrees) {
+    public static Angle ofDegree(double degrees) {
         return new Angle(degrees, Angle.Unit.DEGREE);
     }
 
-    public static Angle fromRadian(double radians) {
+    public static Angle ofRadian(double radians) {
         return new Angle(radians, Angle.Unit.RADIAN);
     }
 
-    public static Angle fromHeadingDeg(double degrees) {
-        return new Angle(degrees, Angle.Unit.DEGREE).wrap(0.0, Angle.Unit.DEGREE.toBase(360.0), Utils.EWrapMode.CYCLE);
+    public static Angle ofHeadingDeg(double degrees) {
+        return Angle.ofDegree(degrees).wrapDegrees(0.0,360.0, Utils.EWrapMode.CYCLE);
     }
 
-    public static Angle fromAzimuth(double val, Angle.Unit unit) {
+    public static Angle ofAzimuth(double val, Angle.Unit unit) {
         return new Angle(val, unit).wrap(0.0, unit.toBase(360.0), Utils.EWrapMode.CYCLE);
     }
 
-    public static Angle fromAzimuthDeg(double degrees) {
-        return new Angle(degrees, Angle.Unit.DEGREE)
-                .wrap(Angle.Unit.DEGREE.toBase(0.0), Angle.Unit.DEGREE.toBase(360.0),
-                        Utils.EWrapMode.CYCLE);
+    public static Angle ofAzimuthDeg(double degrees) {
+        return Angle.ofDegree(degrees).wrapDegrees(0.0,360.0, Utils.EWrapMode.CYCLE);
     }
 
-    public static Angle fromLatitude(double val, Angle.Unit unit) {
+    public static Angle ofLatitude(double val, Angle.Unit unit) {
         return new Angle(val, unit).wrap(unit.toBase(-90.0), unit.toBase(90.0), Utils.EWrapMode.BOUNCE);
     }
 
-    public static Angle fromLatitudeRad(double radians) {
-        return new Angle(radians, Angle.Unit.RADIAN)
-                .wrap(Angle.Unit.DEGREE.toBase(-90.0), Angle.Unit.DEGREE.toBase(90.0),
-                        Utils.EWrapMode.BOUNCE);
+    public static Angle ofLatitudeRad(double radians) {
+        return Angle.ofRadian(radians).wrapDegrees(-90.0,90.0, Utils.EWrapMode.BOUNCE);
     }
 
-    public static Angle fromLatitudeDeg(double degrees) {
-        return new Angle(degrees, Angle.Unit.DEGREE)
-                .wrap(Angle.Unit.DEGREE.toBase(-90.0), Angle.Unit.DEGREE.toBase(90.0),
-                        Utils.EWrapMode.BOUNCE);
+    public static Angle ofLatitudeDeg(double degrees) {
+        return Angle.ofDegree(degrees).wrapDegrees(-90.0,90.0, Utils.EWrapMode.BOUNCE);
     }
 
-    public static Angle fromLongitude(double val, Angle.Unit unit) {
+    public static Angle ofLongitude(double val, Angle.Unit unit) {
         return new Angle(val, unit).wrap(unit.toBase(-180.0), unit.toBase(180.0), Utils.EWrapMode.CYCLE);
     }
 
-    public static Angle fromLongitudeDeg(double degrees) {
-        return new Angle(degrees, Angle.Unit.DEGREE)
-                .wrap(Angle.Unit.DEGREE.toBase(-180.0), Angle.Unit.DEGREE.toBase(180.0),
-                        Utils.EWrapMode.CYCLE);
+    public static Angle ofLongitudeDeg(double degrees) {
+        return Angle.ofDegree(degrees).wrapDegrees(-180.0, 180.0, Utils.EWrapMode.CYCLE);
     }
 
-    public static Angle fromLongitudeRad(double radians) {
-        return new Angle(radians, Angle.Unit.RADIAN).wrap(Angle.Unit.DEGREE.toBase(-180), Angle.Unit.DEGREE.toBase(180.0), Utils.EWrapMode.CYCLE);
+    public static Angle ofLongitudeRad(double radians) {
+        return Angle.ofRadian(radians).wrapDegrees(-180, 180.0, Utils.EWrapMode.CYCLE);
     }
 
-    public static Angle fromElevation(double val, Angle.Unit unit) {
+    public static Angle ofElevation(double val, Angle.Unit unit) {
         return new Angle(val, unit).wrap(unit.toBase(-90.0), unit.toBase(90.0), Utils.EWrapMode.BOUNCE);
     }
 
     
-    public static Angle fromElevationDeg(double degrees) {
-        return new Angle(degrees, Angle.Unit.DEGREE)
-                .wrap(Angle.Unit.DEGREE.toBase(-90.0), Angle.Unit.DEGREE.toBase(90.0),
-                        Utils.EWrapMode.BOUNCE);
+    public static Angle ofElevationDeg(double degrees) {
+        return Angle.ofDegree(degrees).wrapDegrees(-90.0,90.0, Utils.EWrapMode.BOUNCE);
+    }
+
+    public static Angle ofElevationRad(double radians) {
+        return Angle.ofRadian(radians).wrapDegrees(-90.0,90.0, Utils.EWrapMode.BOUNCE);
     }
 
     /**
@@ -201,10 +193,10 @@ public class Angle extends AQuantity<Angle, Angle.Unit> {
     }
 
     /**
-     * Delegates to {@link FlightUtils#getAzimuthInRad(double, double)} for convenience.
+     * Delegates to {@link Utils#getAzimuthInRad(double, double)} for convenience.
      */
     public static Angle calcAzimuth(double x, double y) {
-        return Angle.fromRadian(calcAzimuthRad(x, y));
+        return Angle.ofRadian(calcAzimuthRad(x, y));
     }
 
     /**

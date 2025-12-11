@@ -32,9 +32,9 @@ public record Geodetic(Angle lon, Angle lat, Length alt) implements ISpherical<G
      * @param alt_m   Altitude in meters.
      */
     public Geodetic(double lon_deg, double lat_deg, double alt_m) {
-        this(Angle.fromLongitudeDeg(lon_deg),
-                Angle.fromLatitudeDeg(lat_deg),
-                Length.fromAltitudeMt(alt_m));
+        this(Angle.ofLongitudeDeg(lon_deg),
+                Angle.ofLatitudeDeg(lat_deg),
+                Length.ofAltitudeMt(alt_m));
     }
 
     @Override
@@ -52,7 +52,7 @@ public record Geodetic(Angle lon, Angle lat, Length alt) implements ISpherical<G
     @Override
     /** {@inheritDoc} (Range is the distance from the Earth's center) */
     public Length getRange() { // Note: This is less meaningful for an ellipsoid model.
-        return Length.fromMeter(Earth84.A).add(this.alt);
+        return Length.ofMeter(Earth84.A).add(this.alt);
     }
 
     @Override
@@ -61,7 +61,7 @@ public record Geodetic(Angle lon, Angle lat, Length alt) implements ISpherical<G
      * Creates a new Geodetic point from spherical components.
      */
     public Geodetic create(Angle azimuth, Angle elevation, Length range) {
-        return new Geodetic(azimuth, elevation, range.subtract(Length.fromMeter(Earth84.A)));
+        return new Geodetic(azimuth, elevation, range.subtract(Length.ofMeter(Earth84.A)));
     }
 
     /**
@@ -98,7 +98,7 @@ public record Geodetic(Angle lon, Angle lat, Length alt) implements ISpherical<G
         Geocentric thisEcef = this.toGeocentric();
         Geocentric otherEcef = other.toGeocentric();
         double distanceInMeters = thisEcef.hypotXYZ(otherEcef);
-        return Length.fromDistance(distanceInMeters, Length.Unit.METER);
+        return Length.ofDistance(distanceInMeters, Length.Unit.METER);
     }
 
     /**
@@ -162,7 +162,7 @@ public record Geodetic(Angle lon, Angle lat, Length alt) implements ISpherical<G
         double north = -sinLat * cosLon * dx - sinLat * sinLon * dy + cosLat * dz;
         double up = cosLat * cosLon * dx + cosLat * sinLon * dy + sinLat * dz;
 
-        return new Cartesian(Length.fromMeter(east), Length.fromMeter(north), Length.fromMeter(up));
+        return new Cartesian(Length.ofMeter(east), Length.ofMeter(north), Length.ofMeter(up));
     }
 
     public Cartesian toECEF(Cartesian enu) {
@@ -179,7 +179,7 @@ public record Geodetic(Angle lon, Angle lat, Length alt) implements ISpherical<G
         double y = cosLon * east - sinLat * sinLon * north + cosLat * sinLon * up;
         double z = cosLat * north + sinLat * up;
 
-        return new Cartesian(Length.fromMeter(x), Length.fromMeter(y), Length.fromMeter(z));
+        return new Cartesian(Length.ofMeter(x), Length.ofMeter(y), Length.ofMeter(z));
     }
 
     /**
@@ -213,11 +213,11 @@ public record Geodetic(Angle lon, Angle lat, Length alt) implements ISpherical<G
         double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 
         double distanceInMeters = radius.getBase() * c;
-        return Length.fromDistance(distanceInMeters, Length.Unit.METER);
+        return Length.ofDistance(distanceInMeters, Length.Unit.METER);
     }
 
     public Length getDistanceSurfaceHaversine(Geodetic other) {
-        return getDistanceSurfaceHaversine(other, Length.fromMeter(Earth84.A)); // Use semi-major axis as
+        return getDistanceSurfaceHaversine(other, Length.ofMeter(Earth84.A)); // Use semi-major axis as
                                                                                 // approx.
     }
 
@@ -244,7 +244,7 @@ public record Geodetic(Angle lon, Angle lat, Length alt) implements ISpherical<G
         double x = Math.cos(lat1) * Math.sin(lat2) - Math.sin(lat1) * Math.cos(lat2) * Math.cos(dLon);
 
         double bearingRadians = Math.atan2(y, x);
-        return Angle.fromAzimuth(bearingRadians, Angle.Unit.RADIAN);
+        return Angle.ofAzimuth(bearingRadians, Angle.Unit.RADIAN);
     }
 
     /**
@@ -265,11 +265,11 @@ public record Geodetic(Angle lon, Angle lat, Length alt) implements ISpherical<G
         Length horizontalDistance = this.getDistanceSurface(other);
         Length altDiff = other.alt.subtract(this.alt);
         if (horizontalDistance.getBase() < 1e-9) {
-            return altDiff.getBase() >= 0 ? Angle.fromElevationDeg(90.0)
-                    : Angle.fromElevationDeg(-90.0);
+            return altDiff.getBase() >= 0 ? Angle.ofElevationDeg(90.0)
+                    : Angle.ofElevationDeg(-90.0);
         }
         double elevationRad = Math.atan2(altDiff.getBase(), horizontalDistance.getBase());
-        return Angle.fromElevation(elevationRad, Angle.Unit.RADIAN);
+        return Angle.ofElevation(elevationRad, Angle.Unit.RADIAN);
     }
 
     public Length getAltitudeDifference(Geodetic other) {

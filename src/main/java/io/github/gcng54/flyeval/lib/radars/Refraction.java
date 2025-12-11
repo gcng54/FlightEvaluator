@@ -55,7 +55,7 @@ public class Refraction {
             pressurePa = ISA_P0 * Math.pow(tempK / ISA_T0, -ISA_G / (ISA_LAPSE_RATE_TROPO * ISA_R));
         } else { // Stratosphere (constant temperature)
             // Pressure at tropopause
-            Pressure p_tropopause = getStandardPressure(Length.fromMeter(ISA_TROPOPAUSE_ALT));
+            Pressure p_tropopause = getStandardPressure(Length.ofMeter(ISA_TROPOPAUSE_ALT));
             double p_tropopause_Pa = p_tropopause.inUnit(Pressure.Unit.PASCAL);
             double tempK = ISA_TROPOPAUSE_TEMP; // Constant temperature in this layer
             pressurePa = p_tropopause_Pa * Math.exp(-ISA_G * (h_m - ISA_TROPOPAUSE_ALT) / (ISA_R * tempK));

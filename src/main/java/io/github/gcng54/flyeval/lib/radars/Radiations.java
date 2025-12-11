@@ -23,7 +23,7 @@ public final class Radiations {
     /**
      * The standard mean radius of the Earth (WGS 84), used for many radar calculations.
      */
-    public static final Length EARTH_RADIUS = Length.fromDistanceKm(6371.0088);
+    public static final Length EARTH_RADIUS = Length.ofDistanceKm(6371.0088);
 
     /**
      * The standard atmospheric refraction k-factor, commonly approximated as 4/3.
@@ -253,7 +253,7 @@ public final class Radiations {
         double cosAlpha1 = Math.cos(alpha1);
 
         double f = 1.0 / 298.257223563; // WGS84 flattening
-        double b = Earth84.INSTANCE.getEarthRadius(Angle.fromDegree(90)).getBase(); // Semi-minor axis // NOSONAR
+        double b = Earth84.INSTANCE.getEarthRadius(Angle.ofDegree(90)).getBase(); // Semi-minor axis // NOSONAR
 
         double tanU1 = (1 - f) * Math.tan(lat1);
         double cosU1 = 1 / Math.sqrt((1 + tanU1 * tanU1));
@@ -303,7 +303,7 @@ public final class Radiations {
             lon2 = lon1 + Math.atan2(sinAlpha1 * Math.sin(angDist) * Math.cos(lat1), Math.cos(angDist) - Math.sin(lat1) * Math.sin(lat2));
         }
 
-        return new Geodetic(Angle.fromLongitudeRad(lon2), Angle.fromLatitudeRad(lat2), targetAlt); // NOSONAR
+        return new Geodetic(Angle.ofLongitudeRad(lon2), Angle.ofLatitudeRad(lat2), targetAlt); // NOSONAR
     }
 
     /**
@@ -348,7 +348,7 @@ public final class Radiations {
             // Law of cosines to find side_C_T^2
             double side_C_T_sq = side_C_R * side_C_R + R_s * R_s + 2 * side_C_R * R_s * Math.sin(elRad);
             double side_C_T = Math.sqrt(side_C_T_sq);
-            finalTargetAlt = Length.fromAltitudeMt(side_C_T - Re);
+            finalTargetAlt = Length.ofAltitudeMt(side_C_T - Re);
 
             // Law of cosines to find central angle (gamma)
             double cosGamma = (side_C_R * side_C_R + side_C_T_sq - R_s * R_s) / (2 * side_C_R * side_C_T);
@@ -360,7 +360,7 @@ public final class Radiations {
 
             // Law of cosines to find sin(beta)
             double sinBeta = (side_C_T * side_C_T - side_C_R * side_C_R - R_s * R_s) / (2 * side_C_R * R_s);
-            finalElevation = Angle.fromElevation(Math.asin(Math.max(-1.0, Math.min(1.0, sinBeta))), Angle.Unit.RADIAN);
+            finalElevation = Angle.ofElevation(Math.asin(Math.max(-1.0, Math.min(1.0, sinBeta))), Angle.Unit.RADIAN);
 
             // Central angle is not strictly needed for toSpherical, but we can calculate it for completeness
             double cosGamma = (side_C_R * side_C_R + side_C_T * side_C_T - R_s * R_s) / (2 * side_C_R * side_C_T);
@@ -512,6 +512,6 @@ public final class Radiations {
         double horizonDistSq = (2 * Re * h) + (h * h);
         double horizonDist = Math.sqrt(horizonDistSq);
 
-        return Length.fromDistanceMt(horizonDist);
+        return Length.ofDistanceMt(horizonDist);
     }
 }

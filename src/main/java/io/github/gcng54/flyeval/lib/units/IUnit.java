@@ -131,7 +131,7 @@ public interface IUnit<U extends IUnit<U>> {
             return EDimension.LENGTH;
         if (this instanceof Angle.Unit)
             return EDimension.ANGLE;
-        if (this instanceof Time.Unit)
+        if (this instanceof Timer.Unit)
             return EDimension.TIME;
         if (this instanceof Speed.Unit)
             return EDimension.SPEED;

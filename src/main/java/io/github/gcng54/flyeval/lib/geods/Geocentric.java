@@ -29,9 +29,9 @@ import io.github.gcng54.flyeval.lib.units.*;
          * Creates a Geocentric point at the origin (0, 0, 0).
          */
         public Geocentric() {
-            this(Length.fromRangeKm(0.0),
-                    Length.fromRangeKm(0.0),
-                    Length.fromRangeKm(0.0));
+            this(Length.ofRangeKm(0.0),
+                    Length.ofRangeKm(0.0),
+                    Length.ofRangeKm(0.0));
         }
 
         /**

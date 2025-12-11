@@ -13,9 +13,9 @@ import io.github.gcng54.flyeval.lib.units.*;
 public record Observation(Angle azimuth, Length range, Length altitude) {
 
     public static final Observation ZERO = new Observation(
-            Angle.fromAzimuthDeg(0.0),
-            Length.fromRangeKm(0.0),
-            Length.fromAltitudeMt(0.0));
+            Angle.ofAzimuthDeg(0.0),
+            Length.ofRangeKm(0.0),
+            Length.ofAltitudeMt(0.0));
 
     public Observation {
         if (azimuth == null || range == null || altitude == null) {

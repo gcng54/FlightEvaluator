@@ -153,16 +153,16 @@ public class Speed extends AQuantity<Speed, Speed.Unit> {
 
 
     /** Multiples speed by time to produce a length. */
-    public Length multiply(Time time) {
-        double hour = time.inUnit(Time.Unit.HOUR);
+    public Length multiply(Timer timer) {
+        double hour = timer.inUnit(Timer.Unit.HOUR);
         return new Length(this.getValue() * hour, this.unit.getLengthUnit());
     }
 
     /** Multiples speed by time to produce a length. */
-    public Time divide(Length length) {
+    public Timer divide(Length length) {
         this.validateNotZero();
         double hour = this.inMeterPerHr() / length.inMeter();
-        return new Time(hour, Time.Unit.HOUR);
+        return new Timer(hour, Timer.Unit.HOUR);
     }
 
     /**

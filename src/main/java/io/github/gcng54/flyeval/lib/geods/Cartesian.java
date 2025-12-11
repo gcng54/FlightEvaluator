@@ -19,13 +19,13 @@ import io.github.gcng54.flyeval.lib.units.*;
         }
 
         public Cartesian(Length x, Length y) {
-            this(x, y, Length.fromMeter(0.0));
+            this(x, y, Length.ofMeter(0.0));
         }
 
         public Cartesian() {
-            this(Length.fromMeter(0.0),
-                    Length.fromMeter(0.0),
-                    Length.fromMeter(0.0));
+            this(Length.ofMeter(0.0),
+                    Length.ofMeter(0.0),
+                    Length.ofMeter(0.0));
         }
 
         @Override

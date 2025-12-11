@@ -27,7 +27,7 @@ public class UnitsTest {
         public void testPhysicalDimensionBaseUnits() {
             assertEquals(Length.Unit.METER, EDimension.LENGTH.getBaseUnit());
             assertEquals(Angle.Unit.RADIAN, EDimension.ANGLE.getBaseUnit());
-            assertEquals(Time.Unit.SECOND, EDimension.TIME.getBaseUnit());
+            assertEquals(Timer.Unit.SECOND, EDimension.TIME.getBaseUnit());
             assertEquals(Speed.Unit.METER_HR, EDimension.SPEED.getBaseUnit());
             assertEquals(Area.Unit.SQ_METER, EDimension.AREA.getBaseUnit());
             assertEquals(Volume.Unit.CU_METER, EDimension.VOLUME.getBaseUnit());
@@ -117,9 +117,9 @@ public class UnitsTest {
         @Test
         public void testETimesConversionHourSecond() {
             double hours = 1.5;
-            double seconds = Time.Unit.HOUR.toBase(hours);
+            double seconds = Timer.Unit.HOUR.toBase(hours);
             assertEquals(5400.0, seconds, 1e-9);
-            double backHours = Time.Unit.HOUR.fromBase(seconds);
+            double backHours = Timer.Unit.HOUR.fromBase(seconds);
             assertEquals(hours, backHours, 1e-9);
         }
 
@@ -179,7 +179,7 @@ public class UnitsTest {
         public void testGetDimensionForEachUnitEnum() {
             assertEquals(EDimension.LENGTH, Length.Unit.METER.getDimension());
             assertEquals(EDimension.ANGLE, Angle.Unit.RADIAN.getDimension());
-            assertEquals(EDimension.TIME, Time.Unit.SECOND.getDimension());
+            assertEquals(EDimension.TIME, Timer.Unit.SECOND.getDimension());
             assertEquals(EDimension.SPEED, Speed.Unit.METER_HR.getDimension());
             assertEquals(EDimension.AREA, Area.Unit.SQ_METER.getDimension());
             assertEquals(EDimension.VOLUME, Volume.Unit.CU_METER.getDimension());
@@ -191,7 +191,7 @@ public class UnitsTest {
         public void testGetBaseUnitFromIUnitUsesDimension() {
             assertEquals(Length.Unit.METER, Length.Unit.KILOMETER.getBaseUnit());
             assertEquals(Angle.Unit.RADIAN, Angle.Unit.DEGREE.getBaseUnit());
-            assertEquals(Time.Unit.SECOND, Time.Unit.HOUR.getBaseUnit());
+            assertEquals(Timer.Unit.SECOND, Timer.Unit.HOUR.getBaseUnit());
             assertEquals(Speed.Unit.METER_HR, Speed.Unit.MILE_HR.getBaseUnit());
             assertEquals(Area.Unit.SQ_METER, Area.Unit.SQ_KILOMETER.getBaseUnit());
             assertEquals(Volume.Unit.CU_METER, Volume.Unit.CU_MILE.getBaseUnit());

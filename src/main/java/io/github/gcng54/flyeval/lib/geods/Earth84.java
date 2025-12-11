@@ -29,7 +29,7 @@ public final class Earth84 implements IEarthModel {
         double y = (n + altM) * Math.cos(latRad) * Math.sin(lonRad);
         double z = ((1.0 - E_SQ) * n + altM) * Math.sin(latRad);
 
-        return new Geocentric(Length.fromMeter(x), Length.fromMeter(y), Length.fromMeter(z));
+        return new Geocentric(Length.ofMeter(x), Length.ofMeter(y), Length.ofMeter(z));
     }
 
     @Override
@@ -39,7 +39,7 @@ public final class Earth84 implements IEarthModel {
         double z = ecef.getZ().getBase();
         double p = Math.sqrt(x * x + y * y);
 
-        Angle lon = Angle.fromLongitude(Math.atan2(y, x), Angle.Unit.RADIAN);
+        Angle lon = Angle.ofLongitude(Math.atan2(y, x), Angle.Unit.RADIAN);
 
         // Iterative method for latitude and altitude (Bowring's formula or similar)
         double latRad = Math.atan2(z, p * (1.0 - E_SQ));
@@ -54,7 +54,7 @@ public final class Earth84 implements IEarthModel {
         double n = A / Math.sqrt(1.0 - E_SQ * sinLat * sinLat);
         altM = p / Math.cos(latRad) - n;
 
-        return new Geodetic(lon, Angle.fromLatitude(latRad, Angle.Unit.RADIAN), Length.fromAltitudeMt(altM));
+        return new Geodetic(lon, Angle.ofLatitude(latRad, Angle.Unit.RADIAN), Length.ofAltitudeMt(altM));
     }
 
     @Override
@@ -83,7 +83,7 @@ public final class Earth84 implements IEarthModel {
             sinSigma = Math.sqrt((cosU2 * sinLambda) * (cosU2 * sinLambda)
                     + (cosU1 * sinU2 - sinU1 * cosU2 * cosLambda) * (cosU1 * sinU2 - sinU1 * cosU2 * cosLambda));
             if (sinSigma == 0)
-                return Length.fromAltitudeMt(0.0); // Co-incident points
+                return Length.ofAltitudeMt(0.0); // Co-incident points
             cosSigma = sinU1 * sinU2 + cosU1 * cosU2 * cosLambda;
             sigma = Math.atan2(sinSigma, cosSigma);
             sinAlpha = cosU1 * cosU2 * sinLambda / sinSigma;
@@ -106,7 +106,7 @@ public final class Earth84 implements IEarthModel {
                 - BB / 6 * cosSigma * (-3 + 4 * sinSigma * sinSigma) * (-3 + 4 * cosSigma * cosSigma)));
 
         double s = B * AA * (sigma - deltaSigma);
-        return Length.fromAltitudeMt(s);
+        return Length.ofAltitudeMt(s);
     }
 
     @Override
@@ -133,7 +133,7 @@ public final class Earth84 implements IEarthModel {
             double sinSigma = Math.sqrt((cosU2 * sinLambda) * (cosU2 * sinLambda)
                     + (cosU1 * sinU2 - sinU1 * cosU2 * cosLambda) * (cosU1 * sinU2 - sinU1 * cosU2 * cosLambda));
             if (sinSigma == 0)
-                return Angle.fromAzimuthDeg(0.0);
+                return Angle.ofAzimuthDeg(0.0);
             double cosSigma = sinU1 * sinU2 + cosU1 * cosU2 * cosLambda;
             double sigma = Math.atan2(sinSigma, cosSigma);
             double sinAlpha = cosU1 * cosU2 * sinLambda / sinSigma;
@@ -148,7 +148,7 @@ public final class Earth84 implements IEarthModel {
         double y = Math.sin(lambda) * cosU2;
         double x = cosU1 * sinU2 - sinU1 * cosU2 * Math.cos(lambda);
 
-        return Angle.fromAzimuth(Math.atan2(y, x), Angle.Unit.RADIAN);
+        return Angle.ofAzimuth(Math.atan2(y, x), Angle.Unit.RADIAN);
     }
 
     @Override
@@ -162,9 +162,9 @@ public final class Earth84 implements IEarthModel {
         double den = (A * cosLat) * (A * cosLat) + (B * sinLat) * (B * sinLat);
 
         if (den < 1e-10)
-            return Length.fromAltitudeMt(B); // At the pole
+            return Length.ofAltitudeMt(B); // At the pole
 
-        return Length.fromAltitudeMt(Math.sqrt(num / den));
+        return Length.ofAltitudeMt(Math.sqrt(num / den));
     }
 
     @Override
@@ -243,7 +243,7 @@ public final class Earth84 implements IEarthModel {
         }
 
         return new LatLon(
-                Angle.fromLatitude(lat2, Angle.Unit.RADIAN),
-                Angle.fromLongitude(lon2, Angle.Unit.RADIAN));
+                Angle.ofLatitude(lat2, Angle.Unit.RADIAN),
+                Angle.ofLongitude(lon2, Angle.Unit.RADIAN));
     }
 }

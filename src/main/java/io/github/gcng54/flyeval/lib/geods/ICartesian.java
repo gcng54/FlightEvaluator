@@ -47,8 +47,8 @@ public interface ICartesian<T extends ICartesian<T>> {
         double el = Math.asin(z / rangeVal);
 
         return new Spherical(az,
-                Angle.fromElevation(el, Angle.Unit.RADIAN),
-                Length.fromMeter(rangeVal));
+                Angle.ofElevation(el, Angle.Unit.RADIAN),
+                Length.ofMeter(rangeVal));
     }
 
     default T copy() {

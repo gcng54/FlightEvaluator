@@ -9,7 +9,6 @@ import javafx.scene.control.TextField;
 import java.util.Locale;
 
 import io.github.gcng54.flyeval.lib.units.*;
-import io.github.gcng54.flyeval.lib.geods.*;
 import io.github.gcng54.flyeval.lib.radars.*;
 
 public class UnitConversionController {
@@ -67,7 +66,7 @@ public class UnitConversionController {
         IUnit<?>[] units = switch (dimension) {
             case LENGTH -> Length.Unit.values();
             case ANGLE -> Angle.Unit.values();
-            case TIME -> Time.Unit.values();
+            case TIME -> Timer.Unit.values();
             case SPEED -> Speed.Unit.values();
             case AREA -> Area.Unit.values();
             case VOLUME -> Volume.Unit.values();

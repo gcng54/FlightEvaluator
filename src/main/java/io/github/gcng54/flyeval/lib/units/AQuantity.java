@@ -17,11 +17,17 @@ import java.util.Locale;
  */
 public abstract class AQuantity<Q extends AQuantity<Q, U>, U extends IUnit<U>> {
 
-    /** The numeric value expressed in the current unit. */
+    /**
+     * The numeric value expressed in the current unit.
+     */
     protected final double value;
-    /** The value converted into the unit's base representation. */
+    /**
+     * The value converted into the unit's base representation.
+     */
     protected final double baseValue;
-    /** The unit associated with this quantity instance. */
+    /**
+     * The unit associated with this quantity instance.
+     */
     protected final U unit;
 
     /**
@@ -45,7 +51,7 @@ public abstract class AQuantity<Q extends AQuantity<Q, U>, U extends IUnit<U>> {
      */
     public abstract Q create(double val, U unit);
 
-    public Q of(double val, U unit){
+    public Q of(double val, U unit) {
         return create(val, unit);
     }
 
@@ -55,7 +61,7 @@ public abstract class AQuantity<Q extends AQuantity<Q, U>, U extends IUnit<U>> {
      *
      * @param val the numeric value to assign to the new quantity
      * @return a new instance of {@code Q} representing the specified value in the
-     *         default unit
+     * default unit
      */
     public Q create(double val) {
         return create(val, unit);
@@ -99,6 +105,15 @@ public abstract class AQuantity<Q extends AQuantity<Q, U>, U extends IUnit<U>> {
         return create(fromBase(val), unit);
     }
 
+    public Q wrap(double minBase, double maxBase, Wrapper.EWrapMode wrapMode) {
+        var wrapped = getWrapper(minBase, maxBase, wrapMode).wrap(getBase(), unit);
+        return create(wrapped);
+    }
+
+    public static Wrapper getWrapper(double minBase, double maxBase, Wrapper.EWrapMode wrapMode) {
+        return new Wrapper(minBase, maxBase, wrapMode);
+    }
+
     /**
      * Returns this quantity without applying any wrapping.
      *
@@ -115,6 +130,10 @@ public abstract class AQuantity<Q extends AQuantity<Q, U>, U extends IUnit<U>> {
      */
     public Q wrapPositive() {
         return wrap(0.0, Double.POSITIVE_INFINITY, Utils.EWrapMode.BOUND);
+    }
+
+    public Q wrapDegrees(double mindeg, double maxdeg, Utils.EWrapMode mode) {
+       return wrap(Angle.Unit.DEGREE.toBase(mindeg), Angle.Unit.DEGREE.toBase(maxdeg), mode);
     }
 
     /**
