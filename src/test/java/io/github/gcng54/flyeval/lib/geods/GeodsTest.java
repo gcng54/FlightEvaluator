@@ -16,8 +16,8 @@ class GeodsTest {
         @Test
         void testCartesianConstructorAndGetters() { // NOSONAR
                 Length x = Length.ofMeter(1.0);
-                Length y = Length.ofLength(2.0, Length.Unit.METER);
-                Length z = Length.ofLength(3.0, Length.Unit.METER);
+                Length y = Length.ofMeter(2.0);
+                Length z = Length.ofMeter(3.0);
                 Cartesian c = new Cartesian(x, y, z);
 
                 assertEquals(x, c.getX());
@@ -36,11 +36,11 @@ class GeodsTest {
         @Test
         void testCartesianAddSub() { // NOSONAR
                 Cartesian a = new Cartesian(Length.ofMeter(1),
-                                Length.ofLength(2, Length.Unit.METER),
-                                Length.ofLength(3, Length.Unit.METER));
-                Cartesian b = new Cartesian(Length.ofLength(4, Length.Unit.METER),
-                                Length.ofLength(5, Length.Unit.METER),
-                                Length.ofLength(6, Length.Unit.METER));
+                                Length.ofMeter(2),
+                                Length.ofMeter(3));
+                Cartesian b = new Cartesian(Length.ofMeter(4),
+                                Length.ofMeter(5),
+                                Length.ofMeter(6));
                 Cartesian sum = a.add(b);
                 Cartesian diff = b.subtract(a);
 
@@ -55,8 +55,8 @@ class GeodsTest {
 
         @Test
         void testCartesianMagnitudeAndNormalize() { // NOSONAR
-                Cartesian c = new Cartesian(Length.ofLength(3, Length.Unit.METER),
-                                Length.ofLength(4, Length.Unit.METER),
+                Cartesian c = new Cartesian(Length.ofMeter(3),
+                                Length.ofMeter(4),
                                 Length.ofMeter(0));
                 assertEquals(5.0, c.magnitude(), 1e-10);
 
@@ -86,7 +86,7 @@ class GeodsTest {
                                 Length.ofMeter(1),
                                 Length.ofMeter(1));
                 Spherical s = c.toSpherical();
-                Length r = Length.ofLength(c.magnitude(), Length.Unit.METER);
+                Length r = Length.ofMeter(c.magnitude());
                 Cartesian c2 = (Cartesian) s.toCartesian(r);
                 assertEquals(c.getX().getBase(), c2.getX().getBase(), 1e-10);
                 assertEquals(c.getY().getBase(), c2.getY().getBase(), 1e-10);
@@ -279,9 +279,9 @@ class GeodsTest {
         public void testGeodeticTransform() {
                 Geodetic g = new Geodetic(10.0, 20.0, 100.0); // NOSONAR
                 Cartesian displacement = new Cartesian(
-                        Length.ofLength(10.0, Length.Unit.METER),
-                        Length.ofLength(20.0, Length.Unit.METER),
-                        Length.ofLength(30.0, Length.Unit.METER));
+                        Length.ofMeter(10.0),
+                        Length.ofMeter(20.0),
+                        Length.ofMeter(30.0));
                 Geodetic result = g.transform(displacement);
                 assertNotNull(result);
         }
@@ -306,9 +306,9 @@ class GeodsTest {
         public void testGeodeticToENU() {
                 Geodetic g = new Geodetic(10.0, 20.0, 100.0);
                 Cartesian ecefVector = new Cartesian(
-                        Length.ofLength(1.0, Length.Unit.METER),
-                        Length.ofLength(2.0, Length.Unit.METER),
-                        Length.ofLength(3.0, Length.Unit.METER));
+                        Length.ofMeter(1.0),
+                        Length.ofMeter(2.0),
+                        Length.ofMeter(3.0));
                 Cartesian enu = g.toENU(ecefVector);
                 assertNotNull(enu);
         }
@@ -350,7 +350,7 @@ class GeodsTest {
         public void testEarth84CalculateDestinationVincenty() {
                 Geodetic start = new Geodetic(0.0, 0.0, 0.0); // Equator, Prime Meridian
                 Angle bearing = Angle.ofAzimuthDeg(90.0); // East
-                Length distance = Length.ofDistance(111_319.491, Length.Unit.METER); // Approx 1 degree of longitude at equator
+                Length distance = Length.ofDistanceMt(111_319.491); // Approx 1 degree of longitude at equator
 
                 LatLon destination = Earth84.INSTANCE.calculateDestination(start, bearing, distance);
 
@@ -360,7 +360,7 @@ class GeodsTest {
                 // Test a different bearing and distance
                 start = new Geodetic(0.0, 0.0, 0.0);
                 bearing = Angle.ofAzimuthDeg(0.0); // North
-                distance = Length.ofDistance(110_574.348, Length.Unit.METER); // Approx 1 degree of latitude
+                distance = Length.ofDistanceMt(110_574.348); // Approx 1 degree of latitude
 
                 destination = Earth84.INSTANCE.calculateDestination(start, bearing, distance);
 
@@ -372,7 +372,7 @@ class GeodsTest {
         public void testEarthSphereCalculateDestination() {
                 Geodetic start = new Geodetic(0.0, 0.0, 0.0); // Equator, Prime Meridian
                 Angle bearing = Angle.ofAzimuthDeg(90.0); // East
-                Length distance = Length.ofDistance(111_194.9266, Length.Unit.METER); // Approx 1 degree of longitude on WGS84 mean sphere
+                Length distance = Length.ofDistanceMt(111_194.9266); // Approx 1 degree of longitude on WGS84 mean sphere
 
                 LatLon destination = EarthSph.INSTANCE.calculateDestination(start, bearing, distance);
 
@@ -382,7 +382,7 @@ class GeodsTest {
                 // Test a different bearing and distance
                 start = new Geodetic(0.0, 0.0, 0.0);
                 bearing = Angle.ofAzimuthDeg(0.0); // North
-                distance = Length.ofDistance(111_194.9266, Length.Unit.METER); // Approx 1 degree of latitude on WGS84 mean sphere
+                distance = Length.ofDistanceMt(111_194.9266); // Approx 1 degree of latitude on WGS84 mean sphere
                 destination = EarthSph.INSTANCE.calculateDestination(start, bearing, distance);
                 assertEquals(1.0, destination.lat().inDegrees(), 1e-3); // Should move 1 degree North
                 assertEquals(0.0, destination.lon().inDegrees(), 1e-6); // Should stay on prime meridian
