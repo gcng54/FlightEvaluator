@@ -3,7 +3,7 @@ package io.github.gcng54.flyeval.lib.units;
 import java.util.Locale;
 
 /** Quantity representing elapsed time. */
-public class Time extends AQuantity<Time, Time.Unit> {
+public class Timer extends AQuantity<Timer, Timer.Unit> {
 
 public enum Unit implements IUnit<Unit> {
         SECOND("s", 1.0),
@@ -32,8 +32,8 @@ public enum Unit implements IUnit<Unit> {
          * @param name_ The name of the enum constant.
          * @return The corresponding ETimes constant.
          */
-        public static Time.Unit fromName(String name_) {
-            return Time.Unit.valueOf(name_.toUpperCase(Locale.ENGLISH));
+        public static Timer.Unit fromName(String name_) {
+            return Timer.Unit.valueOf(name_.toUpperCase(Locale.ENGLISH));
         }
 
         @Override
@@ -52,63 +52,63 @@ public enum Unit implements IUnit<Unit> {
         }
     }
     
-    public Time(double value, Time.Unit unit) {
+    public Timer(double value, Timer.Unit unit) {
         super(value, unit);
     }
 
     @Override
-    public Time create(double val, Time.Unit u) {
-        return new Time(val, u);
+    public Timer create(double val, Timer.Unit u) {
+        return new Timer(val, u);
     }
 
     /** @return value expressed in seconds. */
     public double inSecond() {
-        return this.inUnit(Time.Unit.SECOND);
+        return this.inUnit(Timer.Unit.SECOND);
     }
 
     /** @return value expressed in minutes. */
     public double inMinute() {
-        return this.inUnit(Time.Unit.MINUTE);
+        return this.inUnit(Timer.Unit.MINUTE);
     }
 
-    /** @return value expressed in hours. */
+    /** @return value expressed in the past hours. */
     public double inHour() {
-        return this.inUnit(Time.Unit.HOUR);
+        return this.inUnit(Timer.Unit.HOUR);
     }
 
-    /** @return value expressed in days. */
+    /** @return value expressed in the past days. */
     public double inDay() {
-        return this.inUnit(Time.Unit.DAY);
+        return this.inUnit(Timer.Unit.DAY);
     }
 
-    /** @return value expressed in weeks. */
+    /** @return value expressed in the past weeks. */
     public double inWeek() {
-        return this.inUnit(Time.Unit.WEEK);
+        return this.inUnit(Timer.Unit.WEEK);
     }
 
     /** @return value expressed in months (average). */
     public double inMonth() {
-        return this.inUnit(Time.Unit.MONTH);
+        return this.inUnit(Timer.Unit.MONTH);
     }
 
-    /** @return value expressed in years. */
+    /** @return value expressed in the past years. */
     public double inYear() {
-        return this.inUnit(Time.Unit.YEAR);
+        return this.inUnit(Timer.Unit.YEAR);
     }
 
-    public static Time fromDuration(double val, Time.Unit unit) {
-        return new Time(val, unit).wrapPositive();
+    public static Timer ofDuration(double val, Timer.Unit unit) {
+        return new Timer(val, unit).wrapPositive();
     }
 
-    public static Time fromTimestamp(double val, Time.Unit unit) {
-        return new Time(val, unit).wrapPositive();
+    public static Timer ofTimestamp(double val, Timer.Unit unit) {
+        return new Timer(val, unit).wrapPositive();
     }
 
-    public static Time fromHour(double hour) {
-        return new Time(hour, Time.Unit.HOUR).wrapPositive();
+    public static Timer ofHour(double hour) {
+        return new Timer(hour, Timer.Unit.HOUR).wrapPositive();
     }
 
-    public static Time fromSecond(double second) {
-        return new Time(second, Time.Unit.SECOND).wrapPositive();
+    public static Timer ofSecond(double second) {
+        return new Timer(second, Timer.Unit.SECOND).wrapPositive();
     }
 }

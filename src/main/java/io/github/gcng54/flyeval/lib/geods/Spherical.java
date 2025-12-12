@@ -14,9 +14,9 @@ public record Spherical(Angle azimuth, Angle elevation, Length range)
         implements ISpherical<Spherical> {
 
     public static final Spherical ZERO = new Spherical(
-            Angle.fromAzimuthDeg(0.0),
-            Angle.fromElevationDeg(0.0),
-            Length.fromRangeKm(0.0));
+            Angle.ofAzimuthDeg(0.0),
+            Angle.ofElevationDeg(0.0),
+            Length.ofRangeKm(0.0));
 
     public Spherical {
         if (azimuth == null || elevation == null || range == null) {

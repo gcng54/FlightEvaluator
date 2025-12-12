@@ -1,4 +1,4 @@
-time,icao24,lat,lon,baro_altitude,on_ground,velocity,vertical_rate
+timer,icao24,lat,lon,baro_altitude,on_ground,velocity,vertical_rate
 1672531200,a83568,51.4700,-0.4500,10000,false,250,0
 1672531210,a4f2c1,51.6000,-0.2000,9500,false,240,-5.0
 1672531215,a83568,51.4701,-0.4140,10000,false,250,0

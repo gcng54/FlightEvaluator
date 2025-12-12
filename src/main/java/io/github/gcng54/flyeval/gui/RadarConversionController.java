@@ -221,7 +221,7 @@ public class RadarConversionController {
     private double getKFactor(Geodetic radarSite) throws FormParserUtils.ValidationException {
         if (kFactorModeCombo.getValue() == KFactorMode.AUTO_STANDARD) {
             Geodetic target = FormParserUtils.parseGeodetic(tgtLonField, tgtLonUnitCombo, "Target Lon", tgtLatField, tgtLatUnitCombo, "Target Lat", tgtAltField, tgtAltUnitCombo, "Target Alt", true);
-            Length targetAlt = (target != null) ? target.alt() : Length.fromAltitudeMeter(0); // Default to 0 if not available
+            Length targetAlt = (target != null) ? target.alt() : Length.ofAltitudeMt(0); // Default to 0 if not available
             double k = Refraction.calculateKFactorFromStandardAtmosphere(radarSite.alt(), targetAlt);
             kFactorField.setText(String.format(Locale.ENGLISH, "%.6f", k));
             return k;

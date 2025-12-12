@@ -17,11 +17,17 @@ import java.util.Locale;
  */
 public abstract class AQuantity<Q extends AQuantity<Q, U>, U extends IUnit<U>> {
 
-    /** The numeric value expressed in the current unit. */
+    /**
+     * The numeric value expressed in the current unit.
+     */
     protected final double value;
-    /** The value converted into the unit's base representation. */
+    /**
+     * The value converted into the unit's base representation.
+     */
     protected final double baseValue;
-    /** The unit associated with this quantity instance. */
+    /**
+     * The unit associated with this quantity instance.
+     */
     protected final U unit;
 
     /**
@@ -45,13 +51,17 @@ public abstract class AQuantity<Q extends AQuantity<Q, U>, U extends IUnit<U>> {
      */
     public abstract Q create(double val, U unit);
 
+    public Q of(double val, U unit) {
+        return create(val, unit);
+    }
+
     /**
      * Creates a new instance of {@code Q} with the specified value and the default
      * unit.
      *
      * @param val the numeric value to assign to the new quantity
      * @return a new instance of {@code Q} representing the specified value in the
-     *         default unit
+     * default unit
      */
     public Q create(double val) {
         return create(val, unit);
@@ -80,28 +90,24 @@ public abstract class AQuantity<Q extends AQuantity<Q, U>, U extends IUnit<U>> {
 
     /**
      * Returns a new quantity with its base value wrapped within the provided bounds
-     * using the selected wrap mode.
      *
      * @param minBase  lower bound in base units
      * @param maxBase  upper bound in base units
-     * @param wrapMode wrapping strategy
      * @return wrapped quantity
      */
-    public Q wrap(double minBase, double maxBase, Utils.EWrapMode wrapMode) {
-        double val = getBase();
-        if (wrapMode != Utils.EWrapMode.NONE) {
-            val = Utils.wrapWithMode(getBase(), minBase, maxBase, wrapMode);
-        }
+    public Q wrapBound(double minBase, double maxBase) {
+        double val = Utils.wrapBound(getBase(), minBase, maxBase);
         return create(fromBase(val), unit);
     }
 
-    /**
-     * Returns this quantity without applying any wrapping.
-     *
-     * @return unmodified quantity
-     */
-    public Q wrap() {
-        return wrap(-Double.MAX_VALUE, Double.MAX_VALUE, Utils.EWrapMode.NONE);
+    public Q wrapBounce(double minBase, double maxBase) {
+        double val = Utils.wrapBounce(getBase(), minBase, maxBase);
+        return create(fromBase(val), unit);
+    }
+
+    public Q wrapCycle(double minBase, double maxBase) {
+        double val = Utils.wrapCycle(getBase(), minBase, maxBase);
+        return create(fromBase(val), unit);
     }
 
     /**
@@ -110,7 +116,7 @@ public abstract class AQuantity<Q extends AQuantity<Q, U>, U extends IUnit<U>> {
      * @return quantity whose base value is clamped to zero or greater
      */
     public Q wrapPositive() {
-        return wrap(0.0, Double.POSITIVE_INFINITY, Utils.EWrapMode.BOUND);
+        return createBase(Utils.wrapBound(getBase(), 0.0, Double.POSITIVE_INFINITY));
     }
 
     /**

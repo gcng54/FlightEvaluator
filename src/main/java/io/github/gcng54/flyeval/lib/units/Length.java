@@ -13,18 +13,17 @@ public class Length extends AQuantity<Length, Length.Unit> {
 
         @Override
         public String getSymbol() {
-            String symbol = "L";
-            switch (this) {
-                case METER: symbol = "m";  break;
-                case KILOMETER : symbol =  "km"; break;
-                case CENTIMETER : symbol =  "cm"; break;
-                case FOOT : symbol =  "ft"; break;
-                case INCH : symbol =  "in"; break;
-                case YARD : symbol =  "yd"; break;
-                case MILE : symbol =  "mi"; break;
-                case FLIGHTLEVEL : symbol =  "FL"; break; // 100 ft
-                case NAUTICAL : symbol =  "NM"; break;
-                case DATAMILE : symbol =  "DM"; break;
+            String symbol = switch (this) {
+                case METER -> "m";
+                case KILOMETER -> "km";
+                case CENTIMETER -> "cm";
+                case FOOT -> "ft";
+                case INCH -> "in";
+                case YARD -> "yd";
+                case MILE -> "mi";
+                case FLIGHTLEVEL -> "FL"; // 100 ft
+                case NAUTICAL -> "NM";
+                case DATAMILE -> "DM";
             };
             validateSymbol(symbol);
             return symbol;
@@ -32,20 +31,19 @@ public class Length extends AQuantity<Length, Length.Unit> {
 
         @Override
         public double getFactor() {
-            double factor = 1.0;
-            switch (this) {
-                case METER: factor = 1.0; break;
-                case KILOMETER : factor = 1000.0; break;
-                case CENTIMETER : factor = 0.01; break;
-                case FOOT : factor = 0.3048; break;
-                case INCH : factor = 0.0254; break;
-                case YARD : factor = 0.9144; break;
-                case MILE : factor = 1609.344; break;
-                case FLIGHTLEVEL : factor = 30.48;  break; // 100 ft
-                case NAUTICAL : factor = 1852.0; break;
-                case DATAMILE : factor = 1828.8; break;
-
+            double factor = switch (this) {
+                case METER -> 1.0;
+                case KILOMETER -> 1000.0;
+                case CENTIMETER -> 0.01;
+                case FOOT -> 0.3048;
+                case INCH -> 0.0254;
+                case YARD -> 0.9144;
+                case MILE -> 1609.344;
+                case FLIGHTLEVEL -> 30.48; // 100 ft
+                case NAUTICAL -> 1852.0;
+                case DATAMILE -> 1828.8; // 6000 ft
             };
+            ;
             validateFactor(factor);
             return factor;
         }
@@ -73,7 +71,7 @@ public class Length extends AQuantity<Length, Length.Unit> {
         /**
          * Gets the corresponding area unit (e.g., METER -> SQ_METER).
          *
-         * @return The associated {@link EAreas} unit.
+         * @return The associated {@link Area.Unit} unit.
          */
         public Area.Unit getAreaUnit() {
             return Area.Unit.fromName("SQ_" + this.name());
@@ -82,7 +80,7 @@ public class Length extends AQuantity<Length, Length.Unit> {
         /**
          * Gets the corresponding volume unit (e.g., METER -> CU_METER).
          *
-         * @return The associated {@link EVolumes} unit.
+         * @return The associated {@link Volume.Unit} unit.
          */
         public Volume.Unit getVolumeUnit() {
             return Volume.Unit.fromName("CU_" + this.name());
@@ -91,18 +89,11 @@ public class Length extends AQuantity<Length, Length.Unit> {
         /**
          * Gets the corresponding speed unit (e.g., METER -> METER_HR).
          *
-         * @return The associated {@link ESpeeds} unit.
+         * @return The associated {@link Speed.Unit} unit.
          */
         public Speed.Unit getSpeedUnit() {
             return Speed.Unit.fromName(this.name() + "_HR");
         }
-    }
-
-    /**
-     * Public static factory for Length.
-     */
-    public static Length of(double value, Length.Unit unit) {
-        return new Length(value, unit);
     }
 
     /**
@@ -168,58 +159,56 @@ public class Length extends AQuantity<Length, Length.Unit> {
 
     // STATICS
 
-    public static Length fromLength(double val, Length.Unit unit) {
+    public static Length ofLength(double val, Length.Unit unit) {
         return new Length(val, unit).wrapPositive();
     }
 
-    public static Length fromMeter(double meter) {
+    public static Length ofMeter(double meter) {
         return new Length(meter, Length.Unit.METER);
     }
 
-    public static Length fromKilometer(double kilometer) {
+    public static Length ofKilometer(double kilometer) {
         return new Length(kilometer, Length.Unit.KILOMETER);
     }
 
-    public static Length fromFlightLevel(double fl_100ft) {
+    public static Length ofFlightLevel(double fl_100ft) {
         return new Length(fl_100ft, Length.Unit.FLIGHTLEVEL);
     }
 
-    public static Length fromDistance(double value, Length.Unit unit) {
+    public static Length ofDistance(double value, Length.Unit unit) {
         return new Length(value, unit).wrapPositive();
     }
-
-    public static Length fromRangeNM(double nautical) {
-        return new Length(nautical, Length.Unit.NAUTICAL).wrapPositive();
+    public static Length ofDistanceKm(double kilometer) {
+        return ofKilometer(kilometer).wrapPositive();
+    }
+    public static Length ofDistanceMt(double meter) {
+        return ofMeter(meter).wrapPositive();
     }
 
-    public static Length fromRangeKm(double kilometer) {
-        return new Length(kilometer, Length.Unit.KILOMETER).wrapPositive();
-    }
-
-    public static Length fromDistanceKm(double kilometer) {
-        return new Length(kilometer, Length.Unit.KILOMETER).wrapPositive();
-    }
-
-    public static Length fromDistanceMeter(double meter) {
-        return new Length(meter, Length.Unit.METER).wrapPositive();
-    }
-
-    public static Length fromAltitude(double meter, Length.Unit unit) {
+    public static Length ofAltitude(double meter, Length.Unit unit) {
         return new Length(meter, unit).wrapPositive();
     }
     
-    public static Length fromAltitudeMeter(double meter) {
-        return new Length(meter, Length.Unit.METER).wrapPositive();
+    public static Length ofAltitudeMt(double meter) {
+        return ofMeter(meter).wrapPositive();
+    }
+
+    public static Length ofRangeNM(double nautical) {
+        return new Length(nautical, Length.Unit.NAUTICAL).wrapPositive();
+    }
+
+    public static Length ofRangeKm(double kilometer) {
+        return ofKilometer(kilometer).wrapPositive();
     }
 
     /**
      * Derivation: Length / Time = Speed.
      *
-     * @param time time interval
+     * @param timer time interval
      * @return speed using this length unit family
      */
-    public Speed divide(Time time) {
-        double hour = time.inUnit(Time.Unit.HOUR);
+    public Speed divide(Timer timer) {
+        double hour = timer.inUnit(Timer.Unit.HOUR);
         return new Speed(this.getValue() / hour, this.unit.getSpeedUnit());
     }
 

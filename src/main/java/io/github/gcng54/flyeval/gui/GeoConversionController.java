@@ -10,7 +10,6 @@ import java.util.Locale;
 
 import io.github.gcng54.flyeval.lib.units.*;
 import io.github.gcng54.flyeval.lib.geods.*;
-import io.github.gcng54.flyeval.lib.radars.*;
 
 /**
  * Controller for geographic conversions between geodetic, cartesian (ECEF
@@ -265,9 +264,9 @@ public class GeoConversionController {
         if (dx == null || dy == null || dz == null)
             return null;
         return new Cartesian(
-                Length.fromLength(dx, dxUnitCombo.getValue() == null ? Length.Unit.KILOMETER : dxUnitCombo.getValue()),
-                Length.fromLength(dy, dyUnitCombo.getValue() == null ? Length.Unit.KILOMETER : dyUnitCombo.getValue()),
-                Length.fromLength(dz, dzUnitCombo.getValue() == null ? Length.Unit.KILOMETER : dzUnitCombo.getValue()));
+                Length.ofLength(dx, dxUnitCombo.getValue() == null ? Length.Unit.KILOMETER : dxUnitCombo.getValue()),
+                Length.ofLength(dy, dyUnitCombo.getValue() == null ? Length.Unit.KILOMETER : dyUnitCombo.getValue()),
+                Length.ofLength(dz, dzUnitCombo.getValue() == null ? Length.Unit.KILOMETER : dzUnitCombo.getValue()));
     }
 
     private Spherical parseSpherical() throws FormParserUtils.ValidationException {
@@ -278,7 +277,7 @@ public class GeoConversionController {
         if (az == null || el == null || rangeVal == null)
             return null;
 
-        Length range = Length.fromLength(rangeVal,
+        Length range = Length.ofLength(rangeVal,
                 rangeUnitCombo.getValue() == null ? Length.Unit.KILOMETER : rangeUnitCombo.getValue());
 
         if (az == null || el == null || range == null)

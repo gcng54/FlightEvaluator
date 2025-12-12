@@ -21,9 +21,9 @@ public class RadarsTest {
     private static final double K_FACTOR_TOL = 0.05; // Tolerance for k-factor approximations
 
     private Geodetic createGeodetic(double lonDeg, double latDeg, double altM) {
-        Angle lon = Angle.fromLongitudeDeg(lonDeg);
-        Angle lat = Angle.fromLatitudeDeg(latDeg);
-        Length alt = Length.fromAltitudeMeter(altM);
+        Angle lon = Angle.ofLongitudeDeg(lonDeg);
+        Angle lat = Angle.ofLatitudeDeg(latDeg);
+        Length alt = Length.ofAltitudeMt(altM);
         return new Geodetic(lon, lat, alt);
     }
 
@@ -79,9 +79,9 @@ public class RadarsTest {
     public void testToGeodeticDefaultMatchesExplicitK() {
         Geodetic radar = createGeodetic(30.0, -10.0, 200.0);
 
-        Angle az = Angle.fromAzimuthDeg(45.0);
-        Angle el = Angle.fromElevationDeg(5.0);
-        Length range = Length.fromDistanceMeter(100_000.0);
+        Angle az = Angle.ofAzimuthDeg(45.0);
+        Angle el = Angle.ofElevationDeg(5.0);
+        Length range = Length.ofDistanceMt(100_000.0);
         Spherical sph = new Spherical(az, el, range);
 
         Geodetic gDefault = Radiations.toGeodetic(radar, sph);
@@ -94,8 +94,8 @@ public class RadarsTest {
 
     @Test
     public void testHorizonDistanceZeroAltitudeIsZero() {
-        Length alt0 = Length.fromAltitudeMeter(0.0);
-        Angle lat = Angle.fromLatitudeDeg(0.0);
+        Length alt0 = Length.ofAltitudeMt(0.0);
+        Angle lat = Angle.ofLatitudeDeg(0.0);
 
         Length horizon = Radiations.getHorizonDistance(alt0, lat);
         assertEquals(0.0, horizon.getBase(), 1e-9);
@@ -103,9 +103,9 @@ public class RadarsTest {
 
     @Test
     public void testHorizonDistanceIncreasesWithAltitude() {
-        Angle lat = Angle.fromLatitudeDeg(52.0);
-        Length altLow = Length.fromAltitudeMeter(100.0);
-        Length altHigh = Length.fromAltitudeMeter(1000.0);
+        Angle lat = Angle.ofLatitudeDeg(52.0);
+        Length altLow = Length.ofAltitudeMt(100.0);
+        Length altHigh = Length.ofAltitudeMt(1000.0);
 
         Length dLow = Radiations.getHorizonDistance(altLow, lat);
         Length dHigh = Radiations.getHorizonDistance(altHigh, lat);
@@ -115,8 +115,8 @@ public class RadarsTest {
 
     @Test
     public void testHorizonDistanceDefaultMatchesExplicitK() {
-        Angle lat = Angle.fromLatitudeDeg(40.0);
-        Length alt = Length.fromAltitudeMeter(500.0);
+        Angle lat = Angle.ofLatitudeDeg(40.0);
+        Length alt = Length.ofAltitudeMt(500.0);
 
         Length dDefault = Radiations.getHorizonDistance(alt, lat);
         Length dExplicit = Radiations.getHorizonDistance(alt, lat, Radiations.STANDARD_REFRACTION_K);
@@ -219,7 +219,7 @@ public class RadarsTest {
         @Test
         void testCalculateModifiedRefractivity() {
             double N = 313.0;
-            Length height = Length.fromMeter(100.0); // 100 meters
+            Length height = Length.ofMeter(100.0); // 100 meters
             double Re_true = Radiations.EARTH_RADIUS.inMeter();
 
             double M = Refraction.calculateModifiedRefractivity(N, height);
@@ -227,16 +227,16 @@ public class RadarsTest {
             assertEquals(expectedM, M, 1e-6);
 
             // Test with zero height
-            M = Refraction.calculateModifiedRefractivity(N, Length.fromMeter(0.0));
+            M = Refraction.calculateModifiedRefractivity(N, Length.ofMeter(0.0));
             assertEquals(N, M, 1e-9);
         }
 
         @Test
         void testAverageModifiedRefractivity() {
             double N_site = 313.0;
-            Length siteHeight = Length.fromMeter(100.0);
+            Length siteHeight = Length.ofMeter(100.0);
             double N_target = 290.0;
-            Length targetHeight = Length.fromMeter(1000.0);
+            Length targetHeight = Length.ofMeter(1000.0);
 
             double M_site = Refraction.calculateModifiedRefractivity(N_site, siteHeight);
             double M_target = Refraction.calculateModifiedRefractivity(N_target, targetHeight);
@@ -247,8 +247,8 @@ public class RadarsTest {
 
         @Test
         void testAverageModifiedRefractivity_FromStandardAtmosphere() {
-            Length siteHeight = Length.fromMeter(0.0);
-            Length targetHeight = Length.fromMeter(1000.0);
+            Length siteHeight = Length.ofMeter(0.0);
+            Length targetHeight = Length.ofMeter(1000.0);
 
             // Calculate N values from standard atmosphere
             Pressure p_site = Refraction.getStandardPressure(siteHeight);
@@ -271,11 +271,11 @@ public class RadarsTest {
 
         @Test
         void testAverageModifiedRefractivity_WithSiteWeatherAndStandardTarget() {
-            Length siteHeight = Length.fromMeter(100.0);
+            Length siteHeight = Length.ofMeter(100.0);
             Pressure siteP = createPressure(1010.0);
             Temperature siteT = createTemperature(20.0);
             double siteRH = 75.0;
-            Length targetHeight = Length.fromMeter(2000.0);
+            Length targetHeight = Length.ofMeter(2000.0);
 
             // Calculate N_site from weather
             double N_site = Refraction.calculateRefractivity(siteP, siteT, siteRH);
@@ -296,9 +296,9 @@ public class RadarsTest {
 
         @Test
         void testGetStandardTemperature() {
-            Length h0 = Length.fromMeter(0.0);
-            Length h11km = Length.fromKilometer(11.0);
-            Length h15km = Length.fromKilometer(15.0);
+            Length h0 = Length.ofMeter(0.0);
+            Length h11km = Length.ofKilometer(11.0);
+            Length h15km = Length.ofKilometer(15.0);
 
             // Sea level (15 C = 288.15 K)
             assertEquals(288.15, Refraction.getStandardTemperature(h0).inUnit(Temperature.Unit.KELVIN), 1e-3);
@@ -310,9 +310,9 @@ public class RadarsTest {
 
         @Test
         void testGetStandardPressure() {
-            Length h0 = Length.fromMeter(0.0);
-            Length h11km = Length.fromKilometer(11.0);
-            Length h15km = Length.fromKilometer(15.0);
+            Length h0 = Length.ofMeter(0.0);
+            Length h11km = Length.ofKilometer(11.0);
+            Length h15km = Length.ofKilometer(15.0);
 
             // Sea level (101325 Pa)
             assertEquals(101325.0, Refraction.getStandardPressure(h0).inUnit(Pressure.Unit.PASCAL), 1e-1);
@@ -324,14 +324,14 @@ public class RadarsTest {
 
         @Test
         void testGetStandardRelativeHumidity() {
-            Length h = Length.fromMeter(1000.0);
+            Length h = Length.ofMeter(1000.0);
             assertEquals(60.0, Refraction.getStandardRelativeHumidity(h), 1e-9);
         }
 
         @Test
         void testCalculateKFactorFromStandardAtmosphere() {
-            Length h1 = Length.fromMeter(0.0);
-            Length h2 = Length.fromMeter(1000.0);
+            Length h1 = Length.ofMeter(0.0);
+            Length h2 = Length.ofMeter(1000.0);
 
             // This should produce a k-factor close to STANDARD_REFRACTION_K
             double kFactor = Refraction.calculateKFactorFromStandardAtmosphere(h1, h2);
@@ -341,7 +341,7 @@ public class RadarsTest {
         @Test
         void testCalculateKFactorFromAtmosphericProfile_StandardConditions() {
             // Simulate a standard atmosphere where k-factor should be close to 4/3
-            Length h1 = Length.fromMeter(0.0);
+            Length h1 = Length.ofMeter(0.0);
             Pressure p1 = createPressure(1013.25);
             Temperature t1 = createTemperature(15.0);
             double rh1 = 60.0;
@@ -350,7 +350,7 @@ public class RadarsTest {
             // Temp drops by 6.5 C/km -> 15 - 6.5 = 8.5 C
             // Pressure drops (approx) -> 1013.25 * (1 - 0.0065 * 1000 / 288.15)^5.255 = 898.75 hPa
             // RH might stay similar or drop, let's assume 50% for this test
-            Length h2 = Length.fromMeter(1000.0);
+            Length h2 = Length.ofMeter(1000.0);
             Pressure p2 = createPressure(898.75);
             Temperature t2 = createTemperature(8.5);
             double rh2 = 50.0;
@@ -363,13 +363,13 @@ public class RadarsTest {
 
         @Test
         void testCalculateKFactorFromAtmosphericProfile_SameHeight() {
-            Length h1 = Length.fromMeter(100.0);
+            Length h1 = Length.ofMeter(100.0);
             Pressure p1 = createPressure(1000.0);
             Temperature t1 = createTemperature(10.0);
             double rh1 = 70.0;
 
             // Very slightly different height to avoid exact zero division, but still trigger the "same height" logic
-            Length h2 = Length.fromMeter(100.0 + 1e-7);
+            Length h2 = Length.ofMeter(100.0 + 1e-7);
             Pressure p2 = createPressure(1000.0);
             Temperature t2 = createTemperature(10.0);
             double rh2 = 70.0;
@@ -382,12 +382,12 @@ public class RadarsTest {
         @Test
         void testCalculateKFactorFromAtmosphericProfile_NearZeroGradient() {
             // Simulate a scenario where M1 and M2 are very close, leading to dM_dh near zero
-            Length h1 = Length.fromMeter(0.0);
+            Length h1 = Length.ofMeter(0.0);
             Pressure p1 = createPressure(1013.25);
             Temperature t1 = createTemperature(15.0);
             double rh1 = 60.0;
 
-            Length h2 = Length.fromMeter(100.0); // Small height difference
+            Length h2 = Length.ofMeter(100.0); // Small height difference
             Pressure p2 = createPressure(1013.0); // Very slight pressure drop
             Temperature t2 = createTemperature(14.9); // Very slight temp drop
             double rh2 = 60.1; // Very slight RH change
@@ -437,11 +437,11 @@ public class RadarsTest {
 
     @Test
     void testCalculateKFactorFromAtmosphericProfile_WithSiteWeatherAndStandardTarget() {
-        Length siteHeight = Length.fromMeter(100.0);
+        Length siteHeight = Length.ofMeter(100.0);
         Pressure siteP = createPressure(1010.0);
         Temperature siteT = createTemperature(20.0);
         double siteRH = 75.0;
-        Length targetHeight = Length.fromMeter(2000.0);
+        Length targetHeight = Length.ofMeter(2000.0);
 
         // Calculate expected k-factor using the full profile method
         Pressure p_target_std = Refraction.getStandardPressure(targetHeight);

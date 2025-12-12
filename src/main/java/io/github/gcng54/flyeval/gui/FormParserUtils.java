@@ -7,7 +7,6 @@ import org.jetbrains.annotations.Nullable;
 
 import io.github.gcng54.flyeval.lib.units.*;
 import io.github.gcng54.flyeval.lib.geods.*;
-import io.github.gcng54.flyeval.lib.radars.*;
 
 
 /**
@@ -110,7 +109,7 @@ public final class FormParserUtils {
             if (valueInDeg < minDeg || valueInDeg > maxDeg) {
                 throw new ValidationException(String.format("%s must be between %.1f° and %.1f°.", fieldName, minDeg, maxDeg));
             }
-            return Angle.fromAngle(value, unit);
+            return Angle.ofAngle(value, unit);
         } catch (IllegalArgumentException ex) {
             throw new ValidationException("Invalid angle format for " + fieldName + ": " + ex.getMessage());
         }
@@ -122,7 +121,7 @@ public final class FormParserUtils {
     @NotNull
     public static Length parseLength(TextField field, ComboBox<Length.Unit> unitCombo, String fieldName) throws ValidationException {
         Double value = parseDouble(field, fieldName, Double.NEGATIVE_INFINITY, Double.POSITIVE_INFINITY, false);
-        return Length.fromLength(value, unitCombo.getValue());
+        return Length.ofLength(value, unitCombo.getValue());
     }
 
     /**
@@ -132,7 +131,7 @@ public final class FormParserUtils {
     public static Length parseLength(TextField field, ComboBox<Length.Unit> unitCombo, String fieldName, boolean isOptional) throws ValidationException {
         Double value = parseDouble(field, fieldName, Double.NEGATIVE_INFINITY, Double.POSITIVE_INFINITY, isOptional);
         if (isOptional && value == null) return null;
-        return Length.fromLength(value, unitCombo.getValue());
+        return Length.ofLength(value, unitCombo.getValue());
     }
 
     /**

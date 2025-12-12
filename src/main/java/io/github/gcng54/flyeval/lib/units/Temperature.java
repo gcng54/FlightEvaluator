@@ -134,8 +134,7 @@ public class Temperature extends AQuantity<Temperature, Temperature.Unit> {
 
     public static Temperature fromCelsius(double celsius) {
         return new Temperature(celsius, Temperature.Unit.CELSIUS)
-                .wrap(Temperature.Unit.CELSIUS.toBase(-273.15), Double.MAX_VALUE,
-                        Utils.EWrapMode.BOUND);
+                .wrapBound(Temperature.Unit.CELSIUS.toBase(-273.15), Double.MAX_VALUE);
     }
     
     public static Temperature fromKelvin(double kelvin) {
@@ -144,7 +143,6 @@ public class Temperature extends AQuantity<Temperature, Temperature.Unit> {
 
     public static Temperature fromFahrenheit(double fahrenheit) {
         return new Temperature(fahrenheit, Temperature.Unit.FAHRENHEIT)
-                .wrap(Temperature.Unit.FAHRENHEIT.toBase(-459.67), Double.MAX_VALUE,
-                        Utils.EWrapMode.BOUND);
+                .wrapBound(Temperature.Unit.FAHRENHEIT.toBase(-459.67), Double.MAX_VALUE);
     }
 }

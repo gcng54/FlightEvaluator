@@ -5,23 +5,29 @@ import java.util.Locale;
 /** Quantity representing angular measurements. */
 public class Angle extends AQuantity<Angle, Angle.Unit> {
 
+    public static final double RADTODEG = 180.0 / Math.PI;
+    public static final double DEGTORAD = Math.PI / 180.0;
+    public static final double RAD90 = Math.PI / 2.0;
+    public static final double RAD180 = Math.PI;
+    public static final double RAD270 = 3.0 * Math.PI / 2.0;
+    public static final double RAD360 = 2.0 * Math.PI;
+
     /**
      * Defines standard units of angle. The base unit is {@link #RADIAN}.
      */
     public enum Unit implements IUnit<Unit> {
-        RADIAN,        DEGREE,        DMS_DEGREE,        GRADIAN,        ARC_DEGREE,        ARC_MINUTE,        ARC_SECOND;
-    
+        RADIAN, DEGREE, REVOLUTION, DMS_DEGREE, ARC_DEGREE, ARC_MINUTE, ARC_SECOND;
+
         @Override
         public String getSymbol() {
-            String symbol = "A";
-            switch (this) {
-                case RADIAN: symbol = "rad"; break;
-                case DEGREE : symbol =  "°"; break;
-                case DMS_DEGREE : symbol =  "dms"; break;
-                case GRADIAN : symbol =  "gon"; break;
-                case ARC_DEGREE : symbol =  "arc°"; break;
-                case ARC_MINUTE : symbol =  "arc'"; break;
-                case ARC_SECOND : symbol =  "arc\""; break;
+            String symbol = switch (this) {
+                case RADIAN -> "rad";
+                case DEGREE -> "°";
+                case REVOLUTION -> "rev";
+                case DMS_DEGREE -> "dms";
+                case ARC_DEGREE -> "arc°";
+                case ARC_MINUTE -> "arc'";
+                case ARC_SECOND -> "arc\"";
             };
             validateSymbol(symbol);
             return symbol;
@@ -29,20 +35,19 @@ public class Angle extends AQuantity<Angle, Angle.Unit> {
 
         @Override
         public double getFactor() {
-            double factor = 1.0;
-            switch (this) {
-                case RADIAN: factor = 1.0; break;
-                case DEGREE : factor = Math.PI / 180.0; break;
-                case DMS_DEGREE : factor = Math.PI / 180.0; break;
-                case GRADIAN : factor = Math.PI / 200.0; break;
-                case ARC_DEGREE : factor = Math.PI / 180.0; break;
-                case ARC_MINUTE : factor = Math.PI / 10800.0; break;
-                case ARC_SECOND : factor = Math.PI / 648000.0; break;
+            double factor = switch (this) {
+                case RADIAN -> 1.0;
+                case DEGREE -> DEGTORAD;
+                case REVOLUTION -> RAD360;
+                case DMS_DEGREE -> DEGTORAD;
+                case ARC_DEGREE -> DEGTORAD;
+                case ARC_MINUTE -> DEGTORAD / 60.0;
+                case ARC_SECOND -> DEGTORAD / 3600.0;
             };
             validateFactor(factor);
             return factor;
         }
-        
+
         /**
          * Gets the enum constant from its string name (case-insensitive).
          *
@@ -79,14 +84,14 @@ public class Angle extends AQuantity<Angle, Angle.Unit> {
         return this.inUnit(Angle.Unit.DEGREE);
     }
 
+    /** @return angle expressed in revolutions. */
+    public double inRevolutions() {
+        return this.inUnit(Angle.Unit.REVOLUTION);
+    }
+
     /** @return angle expressed in radians. */
     public double inRadians() {
         return this.inUnit(Angle.Unit.RADIAN);
-    }
-
-    /** @return angle expressed in gradians. */
-    public double inGradians() {
-        return this.inUnit(Angle.Unit.GRADIAN);
     }
 
     /** @return angle expressed in arc minutes. */
@@ -99,71 +104,61 @@ public class Angle extends AQuantity<Angle, Angle.Unit> {
         return this.inUnit(Angle.Unit.ARC_SECOND);
     }
 
-    public static Angle fromAngle(double val, Angle.Unit unit) {
+    public static Angle ofAngle(double val, Angle.Unit unit) {
         return new Angle(val, unit);
     }
 
-    public static Angle fromDegree(double degrees) {
+    public static Angle ofDegree(double degrees) {
         return new Angle(degrees, Angle.Unit.DEGREE);
     }
 
-    public static Angle fromRadian(double radians) {
+    public static Angle ofRadian(double radians) {
         return new Angle(radians, Angle.Unit.RADIAN);
     }
 
-    public static Angle fromHeadingDeg(double degrees) {
-        return new Angle(degrees, Angle.Unit.DEGREE).wrap(0.0, Angle.Unit.DEGREE.toBase(360.0), Utils.EWrapMode.CYCLE);
+    public static Angle ofRevolution(double revolutions) {
+        return new Angle(revolutions, Angle.Unit.REVOLUTION);
     }
 
-    public static Angle fromAzimuth(double val, Angle.Unit unit) {
-        return new Angle(val, unit).wrap(0.0, unit.toBase(360.0), Utils.EWrapMode.CYCLE);
+
+    public static Angle ofAzimuth(double val, Angle.Unit unit) {
+        return new Angle(val, unit).wrapAzimuth();
+    }
+    public static Angle ofAzimuthRad(double radians) {
+        return Angle.ofRadian(radians).wrapAzimuth();
+    }
+    public static Angle ofAzimuthDeg(double degrees) {
+        return Angle.ofDegree(degrees).wrapAzimuth();
     }
 
-    public static Angle fromAzimuthDeg(double degrees) {
-        return new Angle(degrees, Angle.Unit.DEGREE)
-                .wrap(Angle.Unit.DEGREE.toBase(0.0), Angle.Unit.DEGREE.toBase(360.0),
-                        Utils.EWrapMode.CYCLE);
+    public static Angle ofLatitude(double val, Angle.Unit unit) {
+        return new Angle(val, unit).wrapLat();
+    }
+    public static Angle ofLatitudeRad(double radians) {
+        return Angle.ofRadian(radians).wrapLat();
+    }
+    public static Angle ofLatitudeDeg(double degrees) {
+        return Angle.ofDegree(degrees).wrapLat();
     }
 
-    public static Angle fromLatitude(double val, Angle.Unit unit) {
-        return new Angle(val, unit).wrap(unit.toBase(-90.0), unit.toBase(90.0), Utils.EWrapMode.BOUNCE);
+    public static Angle ofLongitude(double val, Angle.Unit unit) {
+        return new Angle(val, unit).wrapLon();
+    }
+    public static Angle ofLongitudeDeg(double degrees) {
+        return Angle.ofDegree(degrees).wrapLon();
+    }
+    public static Angle ofLongitudeRad(double radians) {
+        return Angle.ofRadian(radians).wrapLon();
     }
 
-    public static Angle fromLatitudeRad(double radians) {
-        return new Angle(radians, Angle.Unit.RADIAN)
-                .wrap(Angle.Unit.DEGREE.toBase(-90.0), Angle.Unit.DEGREE.toBase(90.0),
-                        Utils.EWrapMode.BOUNCE);
+    public static Angle ofElevation(double val, Angle.Unit unit) {
+        return new Angle(val, unit).wrapBounce(-RAD90, RAD90);
     }
-
-    public static Angle fromLatitudeDeg(double degrees) {
-        return new Angle(degrees, Angle.Unit.DEGREE)
-                .wrap(Angle.Unit.DEGREE.toBase(-90.0), Angle.Unit.DEGREE.toBase(90.0),
-                        Utils.EWrapMode.BOUNCE);
+    public static Angle ofElevationDeg(double degrees) {
+            return Angle.ofDegree(degrees).wrapBounce(-RAD90, RAD90);
     }
-
-    public static Angle fromLongitude(double val, Angle.Unit unit) {
-        return new Angle(val, unit).wrap(unit.toBase(-180.0), unit.toBase(180.0), Utils.EWrapMode.CYCLE);
-    }
-
-    public static Angle fromLongitudeDeg(double degrees) {
-        return new Angle(degrees, Angle.Unit.DEGREE)
-                .wrap(Angle.Unit.DEGREE.toBase(-180.0), Angle.Unit.DEGREE.toBase(180.0),
-                        Utils.EWrapMode.CYCLE);
-    }
-
-    public static Angle fromLongitudeRad(double radians) {
-        return new Angle(radians, Angle.Unit.RADIAN).wrap(Angle.Unit.DEGREE.toBase(-180), Angle.Unit.DEGREE.toBase(180.0), Utils.EWrapMode.CYCLE);
-    }
-
-    public static Angle fromElevation(double val, Angle.Unit unit) {
-        return new Angle(val, unit).wrap(unit.toBase(-90.0), unit.toBase(90.0), Utils.EWrapMode.BOUNCE);
-    }
-
-    
-    public static Angle fromElevationDeg(double degrees) {
-        return new Angle(degrees, Angle.Unit.DEGREE)
-                .wrap(Angle.Unit.DEGREE.toBase(-90.0), Angle.Unit.DEGREE.toBase(90.0),
-                        Utils.EWrapMode.BOUNCE);
+    public static Angle ofElevationRad(double radians) {
+        return Angle.ofRadian(radians).wrapBounce(-RAD90, RAD90);
     }
 
     /**
@@ -200,11 +195,21 @@ public class Angle extends AQuantity<Angle, Angle.Unit> {
         return Math.tan(this.inRadians());
     }
 
+    public Angle wrapLat() {
+        return this.wrapBounce(-RAD90, RAD90);
+    }
+    public Angle wrapLon() {
+        return this.wrapCycle(-RAD180, RAD180);
+    }
+    public Angle wrapAzimuth() {
+        return this.wrapCycle(0.0, RAD360);
+    }
+
     /**
-     * Delegates to {@link FlightUtils#getAzimuthInRad(double, double)} for convenience.
+     * Delegates to {@link Utils#getAzimuthInRad(double, double)} for convenience.
      */
     public static Angle calcAzimuth(double x, double y) {
-        return Angle.fromRadian(calcAzimuthRad(x, y));
+        return Angle.ofRadian(calcAzimuthRad(x, y));
     }
 
     /**
@@ -225,20 +230,20 @@ public class Angle extends AQuantity<Angle, Angle.Unit> {
      * }</pre>
      */
     public static double calcAzimuthRad(double x, double y) {
-    // If both components are zero, return 0 by convention (undefined direction)
-    if (x == 0.0 && y == 0.0) {
-        return 0.0;
+        // If both components are zero, return 0 by convention (undefined direction)
+        if (x == 0.0 && y == 0.0) {
+            return 0.0;
+        }
+        // atan2 returns 0 for (0, 1) (north), which is correct for azimuth
+        double radian = Math.atan2(x, y); // returns [-PI, PI], 0 = north, PI/2 = east
+        if (radian < 0.0)
+            radian += 2.0 * Math.PI; // normalize to [0, 2PI)
+        // If an angle is extremely close to 0 or 2*PI, snap to 0.0 to avoid -0.0 or
+        // floating-point noise
+        if (Math.abs(radian) < 1E-9 || Math.abs(radian - 2.0 * Math.PI) < 1E-9)
+            radian = 0.0;
+        return radian;
     }
-    // atan2 returns 0 for (0, 1) (north), which is correct for azimuth
-    double radian = Math.atan2(x, y); // returns [-PI, PI], 0 = north, PI/2 = east
-    if (radian < 0.0)
-        radian += 2.0 * Math.PI; // normalize to [0, 2PI)
-    // If an angle is extremely close to 0 or 2*PI, snap to 0.0 to avoid -0.0 or
-    // floating-point noise
-    if (Math.abs(radian) < 1E-9 || Math.abs(radian - 2.0 * Math.PI) < 1E-9)
-        radian = 0.0;
-    return radian;
-}
 
     @Override
     public String toString() {

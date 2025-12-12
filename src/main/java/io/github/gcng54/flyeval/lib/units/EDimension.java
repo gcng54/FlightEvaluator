@@ -27,7 +27,7 @@ import java.util.Locale;
 public enum EDimension {
     LENGTH("Length", Length.Unit.METER),
         ANGLE("Angle", Angle.Unit.RADIAN),
-        TIME("Time", Time.Unit.SECOND),
+        TIME("Time", Timer.Unit.SECOND),
         SPEED("Speed", Speed.Unit.METER_HR),
         AREA("Area", Area.Unit.SQ_METER),
         VOLUME("Volume", Volume.Unit.CU_METER),
