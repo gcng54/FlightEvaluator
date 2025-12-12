@@ -12,26 +12,26 @@ public class TypesTest {
     public class ETypesNewTest {
         @Test
         void testTimestampWithinBounds() {
-            Timer t = Timer.fromTimestamp(12345.67, Timer.Unit.SECOND);
+            Timer t = Timer.ofTimestamp(12345.67, Timer.Unit.SECOND);
             assertEquals(12345.67, t.getValue());
             assertEquals(Timer.Unit.SECOND, t.getUnit());
         }
 
         @Test
         void testTimestampBelowLowerBound() {
-            Timer t = Timer.fromTimestamp(-100.0, Timer.Unit.SECOND);
+            Timer t = Timer.ofTimestamp(-100.0, Timer.Unit.SECOND);
             assertEquals(0.0, t.getValue());
         }
 
         @Test
         void testTimestampAboveUpperBound() {
-            Timer t = Timer.fromTimestamp(Double.POSITIVE_INFINITY, Timer.Unit.SECOND);
+            Timer t = Timer.ofTimestamp(Double.POSITIVE_INFINITY, Timer.Unit.SECOND);
             assertEquals(Double.POSITIVE_INFINITY, t.getValue());
         }
 
         @Test
         void testTimestampZero() {
-            Timer t = Timer.fromTimestamp(0.0, Timer.Unit.SECOND);
+            Timer t = Timer.ofTimestamp(0.0, Timer.Unit.SECOND);
             assertEquals(0.0, t.getValue());
         }
 
@@ -130,7 +130,7 @@ public class TypesTest {
 
         @Test
         void testTimeConversion() {
-            Timer t1 = Timer.fromHour(2.0);
+            Timer t1 = Timer.ofHour(2.0);
             assertEquals(7200.0, t1.inUnit(Timer.Unit.SECOND), 1e-9);
             assertEquals(2.0, t1.inUnit(Timer.Unit.HOUR), 1e-9);
             assertEquals(120.0, t1.inUnit(Timer.Unit.MINUTE), 1e-9);
@@ -147,7 +147,7 @@ public class TypesTest {
         @Test
         void testLengthDivideTimeGivesSpeed() {
             Length l = Length.ofKilometer(1000.0);
-            Timer t = Timer.fromHour(100.0);
+            Timer t = Timer.ofHour(100.0);
             Speed s = l.divide(t);
             assertEquals(10.0, s.inUnit(Speed.Unit.KILOMETER_HR), 1e-9);
         }
@@ -155,7 +155,7 @@ public class TypesTest {
         @Test
         void testSpeedMultiplyTimeGivesLength() {
             Speed s = Speed.fromKilometerPerHr(10.0);
-            Timer t = Timer.fromHour(100.0);
+            Timer t = Timer.ofHour(100.0);
             Length l = s.multiply(t);
             assertEquals(1000.0, l.inKilometer(), 1e-9);
         }

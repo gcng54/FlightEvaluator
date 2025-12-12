@@ -7,7 +7,7 @@ import io.github.gcng54.flyeval.lib.units.*;
 /**
  * Represents a point on Earth in Geodetic coordinates (longitude, latitude,
  * altitude).
- * This record implements {@link Type3D.ISpherical} by treating longitude as
+ * This record implements {@link ISpherical} by treating longitude as
  * azimuth,
  * latitude as elevation, and altitude-plus-Earth-radius as range.
  *

@@ -71,17 +71,17 @@ public enum Unit implements IUnit<Unit> {
         return this.inUnit(Timer.Unit.MINUTE);
     }
 
-    /** @return value expressed in hours. */
+    /** @return value expressed in the past hours. */
     public double inHour() {
         return this.inUnit(Timer.Unit.HOUR);
     }
 
-    /** @return value expressed in days. */
+    /** @return value expressed in the past days. */
     public double inDay() {
         return this.inUnit(Timer.Unit.DAY);
     }
 
-    /** @return value expressed in weeks. */
+    /** @return value expressed in the past weeks. */
     public double inWeek() {
         return this.inUnit(Timer.Unit.WEEK);
     }
@@ -91,24 +91,24 @@ public enum Unit implements IUnit<Unit> {
         return this.inUnit(Timer.Unit.MONTH);
     }
 
-    /** @return value expressed in years. */
+    /** @return value expressed in the past years. */
     public double inYear() {
         return this.inUnit(Timer.Unit.YEAR);
     }
 
-    public static Timer fromDuration(double val, Timer.Unit unit) {
+    public static Timer ofDuration(double val, Timer.Unit unit) {
         return new Timer(val, unit).wrapPositive();
     }
 
-    public static Timer fromTimestamp(double val, Timer.Unit unit) {
+    public static Timer ofTimestamp(double val, Timer.Unit unit) {
         return new Timer(val, unit).wrapPositive();
     }
 
-    public static Timer fromHour(double hour) {
+    public static Timer ofHour(double hour) {
         return new Timer(hour, Timer.Unit.HOUR).wrapPositive();
     }
 
-    public static Timer fromSecond(double second) {
+    public static Timer ofSecond(double second) {
         return new Timer(second, Timer.Unit.SECOND).wrapPositive();
     }
 }

@@ -121,7 +121,7 @@ class GeodsTest {
                                 Length.ofMeter(12));
                 Cartesian max = new Cartesian(Length.ofMeter(6), Length.ofMeter(12),
                                 Length.ofMeter(20));
-                Cartesian clamped = c.clamp(min, max, Utils.EWrapMode.BOUND);
+                Cartesian clamped = c.wrapBound(min, max);
 
                 assertEquals(5.0, clamped.getX().getBase(), 1e-10); // in range
                 assertEquals(10.0, clamped.getY().getBase(), 1e-10); // in range

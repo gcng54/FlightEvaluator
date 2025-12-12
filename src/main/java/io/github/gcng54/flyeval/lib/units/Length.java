@@ -178,13 +178,11 @@ public class Length extends AQuantity<Length, Length.Unit> {
     public static Length ofDistance(double value, Length.Unit unit) {
         return new Length(value, unit).wrapPositive();
     }
-
     public static Length ofDistanceKm(double kilometer) {
-        return new Length(kilometer, Length.Unit.KILOMETER).wrapPositive();
+        return ofKilometer(kilometer).wrapPositive();
     }
-
     public static Length ofDistanceMt(double meter) {
-        return new Length(meter, Length.Unit.METER).wrapPositive();
+        return ofMeter(meter).wrapPositive();
     }
 
     public static Length ofAltitude(double meter, Length.Unit unit) {
@@ -192,7 +190,7 @@ public class Length extends AQuantity<Length, Length.Unit> {
     }
     
     public static Length ofAltitudeMt(double meter) {
-        return new Length(meter, Length.Unit.METER).wrapPositive();
+        return ofMeter(meter).wrapPositive();
     }
 
     public static Length ofRangeNM(double nautical) {
@@ -200,7 +198,7 @@ public class Length extends AQuantity<Length, Length.Unit> {
     }
 
     public static Length ofRangeKm(double kilometer) {
-        return new Length(kilometer, Length.Unit.KILOMETER).wrapPositive();
+        return ofKilometer(kilometer).wrapPositive();
     }
 
     /**
