@@ -85,19 +85,19 @@ public class Area extends AQuantity<Area, Area.Unit> {
         return this.inUnit(Area.Unit.SQ_KILOMETER);
     }
 
-    public static Area fromSurface(double val, Area.Unit unit) {
+    public static Area ofSurface(double val, Area.Unit unit) {
         return new Area(val, unit).wrapPositive();
     }
 
-    public static Area fromSurface(double val, Length.Unit unit) {
+    public static Area ofSurface(double val, Length.Unit unit) {
         return new Area(val, unit).wrapPositive();
     }
 
-    public static Area fromSqKilometer(double sq_kilometer) {
+    public static Area ofSqKilometer(double sq_kilometer) {
         return new Area(sq_kilometer, Area.Unit.SQ_KILOMETER).wrapPositive();
     }
 
-    public static Area fromSqMeter(double sq_meter) {
+    public static Area ofSqMeter(double sq_meter) {
         return new Area(sq_meter, Area.Unit.SQ_METER).wrapPositive();
     }
 

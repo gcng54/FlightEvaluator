@@ -94,10 +94,16 @@ public class Speed extends AQuantity<Speed, Speed.Unit> {
         return this.inUnit(Speed.Unit.METER_HR) / 3600.0;
     }
 
+    /** @return speed in kilometers per hour. */
+    public double inMPS() {
+        return this.inUnit(Speed.Unit.METER_HR) / 3600.0;
+    }
+
     /** @return speed in knots. */
     public double inKnot() {
         return this.inUnit(Speed.Unit.NAUTICAL_HR);
     }
+
 
     /** @return speed in kilometers per hour. */
     public double inKPH() {
@@ -126,26 +132,25 @@ public class Speed extends AQuantity<Speed, Speed.Unit> {
         return this.getBase() / getSpeedOfSound(altitude).getBase();
     }
 
-
-    public static Speed fromMeterPerHr(double metersPerHour) {
+    public static Speed ofMeterPerHr(double metersPerHour) {
         return new Speed(metersPerHour, Speed.Unit.METER_HR).wrapPositive();
     }
 
-    public static Speed fromKilometerPerHr(double kilometersPerHour) {
+    public static Speed ofKilometerPerHr(double kilometersPerHour) {
         return new Speed(kilometersPerHour, Speed.Unit.KILOMETER_HR).wrapPositive();
     }
 
-    public static Speed fromKnot(double knots) {
+    public static Speed ofKnot(double knots) {
         return new Speed(knots, Speed.Unit.NAUTICAL_HR).wrapPositive();
     }
 
-    public static Speed fromMach(double mach) {
+    public static Speed ofMach(double mach) {
         double speedOfSoundMPS = calcSpeedOfSoundInMPS(0.0);
         mach = mach * speedOfSoundMPS * 3.6;
         return new Speed(mach, Speed.Unit.KILOMETER_HR).wrapPositive();
     }
 
-    public static Speed fromMach(double mach, Length altitude) {
+    public static Speed ofMach(double mach, Length altitude) {
         double speedOfSoundMPS = calcSpeedOfSoundInMPS(altitude.inMeter());
         mach = mach * speedOfSoundMPS * 3.6;
         return new Speed(mach, Speed.Unit.KILOMETER_HR).wrapPositive();

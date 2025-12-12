@@ -109,7 +109,7 @@ public final class FormParserUtils {
             if (valueInDeg < minDeg || valueInDeg > maxDeg) {
                 throw new ValidationException(String.format("%s must be between %.1f° and %.1f°.", fieldName, minDeg, maxDeg));
             }
-            return Angle.ofAngle(value, unit);
+            return new Angle(value, unit);
         } catch (IllegalArgumentException ex) {
             throw new ValidationException("Invalid angle format for " + fieldName + ": " + ex.getMessage());
         }
@@ -121,7 +121,7 @@ public final class FormParserUtils {
     @NotNull
     public static Length parseLength(TextField field, ComboBox<Length.Unit> unitCombo, String fieldName) throws ValidationException {
         Double value = parseDouble(field, fieldName, Double.NEGATIVE_INFINITY, Double.POSITIVE_INFINITY, false);
-        return Length.ofLength(value, unitCombo.getValue());
+        return new Length(value, unitCombo.getValue());
     }
 
     /**
@@ -131,7 +131,7 @@ public final class FormParserUtils {
     public static Length parseLength(TextField field, ComboBox<Length.Unit> unitCombo, String fieldName, boolean isOptional) throws ValidationException {
         Double value = parseDouble(field, fieldName, Double.NEGATIVE_INFINITY, Double.POSITIVE_INFINITY, isOptional);
         if (isOptional && value == null) return null;
-        return Length.ofLength(value, unitCombo.getValue());
+        return new Length(value, unitCombo.getValue());
     }
 
     /**
@@ -141,7 +141,7 @@ public final class FormParserUtils {
     public static Pressure parsePressure(TextField field, ComboBox<Pressure.Unit> unitCombo, String fieldName) throws ValidationException {
         Double value = parseDouble(field, fieldName, 0, Double.POSITIVE_INFINITY, true);
         if (value == null) return null;
-        return Pressure.fromPressure(value, unitCombo.getValue());
+        return new Pressure(value, unitCombo.getValue());
     }
 
     /**
@@ -151,7 +151,7 @@ public final class FormParserUtils {
     public static Temperature parseTemperature(TextField field, ComboBox<Temperature.Unit> unitCombo, String fieldName) throws ValidationException {
         Double value = parseDouble(field, fieldName, -273.15, Double.POSITIVE_INFINITY, true);
         if (value == null) return null;
-        return Temperature.fromTemperature(value, unitCombo.getValue());
+        return new Temperature(value, unitCombo.getValue());
     }
 
     /**

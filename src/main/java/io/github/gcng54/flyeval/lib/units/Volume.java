@@ -85,19 +85,19 @@ public class Volume extends AQuantity<Volume, Volume.Unit> {
         return this.inUnit(Volume.Unit.CU_KILOMETER);
     }
 
-    public static Volume fromSpace(double val, Volume.Unit unit) {
+    public static Volume ofSpace(double val, Volume.Unit unit) {
         return new Volume(val, unit).wrapPositive();
     }
 
-    public static Volume fromSpace(double val, Length.Unit unit) {
+    public static Volume ofSpace(double val, Length.Unit unit) {
         return new Volume(val, unit).wrapPositive();
     }
     
-    public static Volume fromSpaceMeter(double cu_meter) {
+    public static Volume ofSpaceMt(double cu_meter) {
         return new Volume(cu_meter, Volume.Unit.CU_METER).wrapPositive();
     }
 
-    public static Volume fromCuMeter(double cu_meter) {
+    public static Volume ofCuMeter(double cu_meter) {
         return new Volume(cu_meter, Volume.Unit.CU_METER).wrapPositive();
     }
 

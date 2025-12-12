@@ -159,10 +159,6 @@ public class Length extends AQuantity<Length, Length.Unit> {
 
     // STATICS
 
-    public static Length ofLength(double val, Length.Unit unit) {
-        return new Length(val, unit).wrapPositive();
-    }
-
     public static Length ofMeter(double meter) {
         return new Length(meter, Length.Unit.METER);
     }

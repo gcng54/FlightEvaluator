@@ -92,12 +92,7 @@ public class Temperature extends AQuantity<Temperature, Temperature.Unit> {
 
     @Override
     public double inUnit(Temperature.Unit targetUnit) {
-        double baseValue = this.getBase();
-        return switch (targetUnit) {
-            case KELVIN -> baseValue;
-            case CELSIUS -> baseValue - 273.15;
-            case FAHRENHEIT -> (baseValue - 273.15) * 9.0 / 5.0 + 32;
-        };
+        return targetUnit.fromBase(this.toBase(this.getValue()));
     }
 
     @Override
@@ -128,20 +123,20 @@ public class Temperature extends AQuantity<Temperature, Temperature.Unit> {
         return this.inUnit(Temperature.Unit.KELVIN);
     }
 
-    public static Temperature fromTemperature(double val, Temperature.Unit unit) {
+    public static Temperature ofTemp(double val, Temperature.Unit unit) {
         return new Temperature(val, unit);
     }
 
-    public static Temperature fromCelsius(double celsius) {
+    public static Temperature ofCelsius(double celsius) {
         return new Temperature(celsius, Temperature.Unit.CELSIUS)
                 .wrapBound(Temperature.Unit.CELSIUS.toBase(-273.15), Double.MAX_VALUE);
     }
     
-    public static Temperature fromKelvin(double kelvin) {
+    public static Temperature ofKelvin(double kelvin) {
         return new Temperature(kelvin, Temperature.Unit.KELVIN).wrapPositive();
     }
 
-    public static Temperature fromFahrenheit(double fahrenheit) {
+    public static Temperature ofFahrenheit(double fahrenheit) {
         return new Temperature(fahrenheit, Temperature.Unit.FAHRENHEIT)
                 .wrapBound(Temperature.Unit.FAHRENHEIT.toBase(-459.67), Double.MAX_VALUE);
     }

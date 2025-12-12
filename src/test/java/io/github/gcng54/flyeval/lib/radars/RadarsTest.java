@@ -28,11 +28,11 @@ public class RadarsTest {
     }
 
     private Pressure createPressure(double hPa) {
-        return Pressure.fromHectopascal(hPa);
+        return Pressure.ofHectopascal(hPa);
     }
 
     private Temperature createTemperature(double celsius) {
-        return Temperature.fromCelsius(celsius);
+        return Temperature.ofCelsius(celsius);
     }
 
     @Test
@@ -395,7 +395,7 @@ public class RadarsTest {
             // This setup is designed to make N1 and N2, and thus M1 and M2, very close.
             // The k-factor should become very large.
             double kFactor = Refraction.calculateKFactorFromAtmosphericProfile(h1, p1, t1, rh1, h2, p2, t2, rh2);
-            assertTrue(kFactor < 500.0); // FIXME Should be a large value indicating near-zero gradient
+            assertTrue(kFactor > 500.0); // FIXME Should be a large value indicating near-zero gradient
         }
 
         @Test

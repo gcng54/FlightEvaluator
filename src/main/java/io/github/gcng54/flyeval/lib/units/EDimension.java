@@ -26,13 +26,13 @@ import java.util.Locale;
  */
 public enum EDimension {
     LENGTH("Length", Length.Unit.METER),
-        ANGLE("Angle", Angle.Unit.RADIAN),
-        TIME("Time", Timer.Unit.SECOND),
-        SPEED("Speed", Speed.Unit.METER_HR),
-        AREA("Area", Area.Unit.SQ_METER),
-        VOLUME("Volume", Volume.Unit.CU_METER),
-        PRESSURE("Pressure", Pressure.Unit.PASCAL),
-        TEMPERATURE("Temperature", Temperature.Unit.KELVIN);
+    ANGLE("Angle", Angle.Unit.RADIAN),
+    TIME("Time", Timer.Unit.SECOND),
+    SPEED("Speed", Speed.Unit.METER_HR),
+    AREA("Area", Area.Unit.SQ_METER),
+    VOLUME("Volume", Volume.Unit.CU_METER),
+    PRESSURE("Pressure", Pressure.Unit.PASCAL),
+    TEMPERATURE("Temperature", Temperature.Unit.KELVIN);
 
     private final String name;
     private final IUnit<?> baseUnit;

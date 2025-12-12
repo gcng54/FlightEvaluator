@@ -36,7 +36,7 @@ public class Refraction {
             // A full ISA model would have more layers.
             tempK = ISA_TROPOPAUSE_TEMP;
         }
-        return Temperature.fromKelvin(tempK);
+        return Temperature.ofKelvin(tempK);
     }
 
     /**
@@ -60,7 +60,7 @@ public class Refraction {
             double tempK = ISA_TROPOPAUSE_TEMP; // Constant temperature in this layer
             pressurePa = p_tropopause_Pa * Math.exp(-ISA_G * (h_m - ISA_TROPOPAUSE_ALT) / (ISA_R * tempK));
         }
-        return Pressure.fromPascal(pressurePa);
+        return Pressure.ofPascal(pressurePa);
     }
 
     /**
@@ -95,7 +95,7 @@ public class Refraction {
 
         double es_hpa = A * Math.exp((B * tempCelsius) / (tempCelsius + C));
         // Convert hPa to Pa for Quants.Pressure base unit
-        return Pressure.fromPascal(es_hpa * 100);
+        return Pressure.ofPascal(es_hpa * 100);
     }
 
     /**
@@ -112,7 +112,7 @@ public class Refraction {
         Pressure es = calculateSaturationVaporPressure(temp);
         double e_hpa = es.inUnit(Pressure.Unit.HECTOPASCAL) * (relativeHumidity / 100.0);
         // Convert hPa to Pa for Quants.Pressure base unit
-        return Pressure.fromPascal(e_hpa * 100);
+        return Pressure.ofPascal(e_hpa * 100);
     }
 
     /**

@@ -104,9 +104,6 @@ public class Angle extends AQuantity<Angle, Angle.Unit> {
         return this.inUnit(Angle.Unit.ARC_SECOND);
     }
 
-    public static Angle ofAngle(double val, Angle.Unit unit) {
-        return new Angle(val, unit);
-    }
 
     public static Angle ofDegree(double degrees) {
         return new Angle(degrees, Angle.Unit.DEGREE);
@@ -119,7 +116,6 @@ public class Angle extends AQuantity<Angle, Angle.Unit> {
     public static Angle ofRevolution(double revolutions) {
         return new Angle(revolutions, Angle.Unit.REVOLUTION);
     }
-
 
     public static Angle ofAzimuth(double val, Angle.Unit unit) {
         return new Angle(val, unit).wrapAzimuth();
